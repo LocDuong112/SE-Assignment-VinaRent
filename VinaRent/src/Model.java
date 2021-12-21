@@ -17,4 +17,16 @@ public class Model {
         this.consumption = consumption;
         this.numDoor = numDoor;
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public List<Car> getCarList() {
+        return carList;
+    }
+
+    public void setCarList(List<Car> carList) {
+        this.carList = carList;
+    }
 }

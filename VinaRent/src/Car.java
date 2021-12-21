@@ -6,12 +6,16 @@ public class Car {
     private String branchNumber;
     private int year;
 
-    public Car(int regNum, String color, int year, String modelNumber, String status, String branchNumber) {
+    public Car(int regNum, String color, int year, String modelNumber, String branchNumber) {
         this.regNum = regNum;
         this.color = color;
         this.year = year;
         this.modelNumber = modelNumber;
         this.branchNumber = branchNumber;
-        this.status = status;
+        this.status = "RENT-READY";
+    }
+
+    public int getRegNum() {
+        return regNum;
     }
 }

@@ -1,15 +1,15 @@
 import java.util.List;
 
 public class Branch {
-    private int branchNumber;
+    private String branchNumber;
     private List<Branch> neighborList;
     private List<Model> modelList;
 
-    public Branch(int branchNumber) {
+    public Branch(String branchNumber) {
         this.branchNumber = branchNumber;
     }
 
-    public int getBranchNumber() {
+    public String getBranchNumber() {
         return branchNumber;
     }
 
@@ -21,7 +21,7 @@ public class Branch {
         return modelList;
     }
 
-    public void setBranchNumber(int branchNumber) {
+    public void setBranchNumber(String branchNumber) {
         this.branchNumber = branchNumber;
     }
 

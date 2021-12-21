@@ -25,14 +25,11 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8bb82ada-6b36-4287-b35b-644864ace9c1" name="Default Changelist" comment="Testing">
-      <change afterPath="$PROJECT_DIR$/src/Transmission.java" afterDir="false" />
+    <list default="true" id="8bb82ada-6b36-4287-b35b-644864ace9c1" name="Default Changelist" comment="Constructors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Branch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Branch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Car.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Rental.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rental.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VinaRentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VinaRentSystem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,7 +79,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640078891538</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Constructors">
+      <created>1640082965760</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1640082965760</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -117,12 +121,13 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Testing IntelliJ's Git" />
     <MESSAGE value="Testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testing" />
+    <MESSAGE value="Constructors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Constructors" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="275" y="112" key="Vcs.Push.Dialog.v2" timestamp="1640078902339">
+    <state x="275" y="112" key="Vcs.Push.Dialog.v2" timestamp="1640082971010">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="275" y="112" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1640078902339" />
+    <state x="275" y="112" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1640082971010" />
   </component>
 </project>
