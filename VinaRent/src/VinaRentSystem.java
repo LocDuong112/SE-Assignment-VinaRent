@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class VinaRentSystem {
@@ -7,6 +8,7 @@ public class VinaRentSystem {
     private List<Car> carList;
     private List<Customer> customerList;
     private List<Rental> rentalList;
+    private List<Customer> blacklist;
 
     public VinaRentSystem() {
         this.branchList = new ArrayList<>();
@@ -14,12 +16,44 @@ public class VinaRentSystem {
         this.carList = new ArrayList<>();
         this.customerList = new ArrayList<>();
         this.rentalList = new ArrayList<>();
+        this.blacklist = new ArrayList<>();
     }
 
+ // ---------------------------------- PRIVATE METHODS ---------------------------------- //
+    private Branch getBranch(String branchNumber) throws Exception{
+    	Iterator<Branch> itr = branchList.iterator();
+    	while(itr.hasNext()) {
+    		Branch branch = itr.next();
+    		if (branch.getBranchNumber().equals(branchNumber))
+    			return branch;
+    	}
+    	
+    	String msg = "Error: No branch found!";
+		System.out.println(msg);
+		throw new Exception(msg);
+    }
+    
+    private Model getModel(String modelNumber) throws Exception{
+    	Iterator<Model> itr = modelList.iterator();
+    	while (itr.hasNext()) {
+    		Model model = itr.next();
+    		if (model.getNumber().equals(modelNumber))
+    			return model;
+    	}
+    	
+    	String msg = "Error: No model found!";
+		System.out.println(msg);
+		throw new Exception(msg);
+    }
+    
+ // ------------------------------ END OF PRIVATE METHODS ------------------------------- //
+    
+    
+    
     // Add a branch
-    public void addBranch(String branchNumber) throws Exception {
+    public void addBranch(String branchNumber, String name) throws Exception {
         // check if the branchNumber is duplicated
-        for (Branch branch:branchList) {
+        for (Branch branch : branchList) {
             if (branch.getBranchNumber() == branchNumber) {
                 String errMess = "Branch number is already assigned. Please replace with a new branch number.\n";
                 throw new Exception(errMess);
@@ -27,65 +61,33 @@ public class VinaRentSystem {
         }
 
         // Create and add a new branch
-        Branch newBranch = new Branch(branchNumber);
+        Branch newBranch = new Branch(branchNumber, name);
         branchList.add(newBranch);
     }
 
     // Make a pair of branches neighbors to each other
-    public void makeNeighbor (String branch1, String branch2) throws Exception {
+    public void makeNeighbor(String branch1, String branch2) throws Exception {
         // check if branch 1 and branch 2 exist
-        boolean checkBranch1 = false, checkBranch2 = false;
-        for (Branch branch:branchList) {
-            if (branch.getBranchNumber() == branch1) {
-                checkBranch1 = true;
-            }
-            if (branch.getBranchNumber() == branch2) {
-                checkBranch2 = true;
-            }
-        }
-        if (checkBranch1 && checkBranch2) {
-            String errMess = "Branches don't exists.\n";
-            throw new Exception(errMess);
-        }
+        Branch b1 = getBranch(branch1);
+        Branch b2 = getBranch(branch2);
 
         // check if branch 1 and the branch 2 are not already neighbor
-        for (Branch branch:branchList) {
-            if (branch.getBranchNumber() == branch1) {
-                boolean checkNeighbor = false;
-                for (Branch neighbor:branch.getNeighborList()) {
-                    if (neighbor.getBranchNumber() == branch2) {
-                        checkNeighbor = true;
-                        break;
-                    }
-                }
-                if (checkNeighbor) {
-                    String errMess = "The branches are already neighbor.\n";
-                    throw new Exception(errMess);
-                }
-            }
+        for (Branch branch : b1.getNeighborList()) {
+        	if (branch.getBranchNumber().equals(branch2)) {
+        		String msg = "Error: Branches are already neighbors!";
+        		System.out.println(msg);
+        		throw new Exception(msg);
+        	}
         }
 
         // add neighbor branch to this branch’s neighborList
-        for (Branch b1:branchList) {
-            for (Branch b2:branchList) {
-                if ((b1.getBranchNumber()==branch1) &&
-                        (b2.getBranchNumber()==branch2)) {
-                    List<Branch> neighborTmp;
-                    neighborTmp = b1.getNeighborList();
-                    neighborTmp.add(b2);
-                    b1.setNeighborList(neighborTmp);
-
-                    neighborTmp = b2.getNeighborList();
-                    neighborTmp.add(b1);
-                    b1.setNeighborList(neighborTmp);
-                }
-            }
-        }
+        b1.getNeighborList().add(b2);
+        b2.getNeighborList().add(b1);
     }
 
     // Add a model
     public void addModel(String number, String name, Transmission transmission,
-                         float consumption, int numDoor) throws Exception {
+                         float consumption, int numDoor, Group group) throws Exception {
         // check if modelNumber exists
         for (Model model: modelList) {
             if (model.getNumber() == number) {
@@ -95,7 +97,7 @@ public class VinaRentSystem {
         }
 
         // create and add a new model to modelList
-        Model newModel = new Model(number, name, transmission, consumption, numDoor);
+        Model newModel = new Model(number, name, transmission, consumption, numDoor, group);
         modelList.add(newModel);
     }
 
@@ -111,43 +113,17 @@ public class VinaRentSystem {
         }
 
         // check if branchNumber exists
-        boolean checkBranch = false;
-        for (Branch branch: branchList) {
-            if (branch.getBranchNumber() == branchNumber) {
-                checkBranch = true;
-                break;
-            }
-        }
-        if (!checkBranch) {
-            String errMess = "Branch doesn't exists.\n";
-            throw new Exception(errMess);
-        }
+        Branch branch = getBranch(branchNumber);
 
         // check if branchNumber exists
-        boolean checkModel = false;
-        for (Model model: modelList) {
-            if (model.getNumber()==modelNumber) {
-                checkModel = true;
-                break;
-            }
-        }
-        if (!checkModel) {
-            String errMess = "Model doesn't exists.\n";
-            throw new Exception(errMess);
-        }
+        Model model = getModel(modelNumber);
 
         // Create and add a new car to list
         Car newCar = new Car(regNum, color, year, modelNumber, branchNumber);
         carList.add(newCar);
+        branch.getCarlList().add(newCar);
 
         // add new car to carList in model
-        for (Model model: modelList) {
-            if (model.getNumber() == modelNumber) {
-                List<Car> carTmp;
-                carTmp = model.getCarList();
-                carTmp.add(newCar);
-                model.setCarList(carTmp);
-            }
-        }
+        model.getCarList().add(newCar);
     }
 }

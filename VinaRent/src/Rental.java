@@ -6,7 +6,6 @@ public class Rental {
     private Date pickupDate, returnDate, realReturnDate;
     private String modelNumber;
     private String regNum;
-    private String status;
 
     public Rental(Customer customer, String pickupBranch, String returnBranch,
                   Date pickupDate, Date returnDate, String modelNumber, String regNum) {
@@ -17,19 +16,35 @@ public class Rental {
         this.returnDate = returnDate;
         this.modelNumber = modelNumber;
         this.regNum = regNum;
-
-        this.realReturnDate = new Date();
-        this.realReturnBranch = "NULL";
-        this.status = "NOT RETURNED";
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    
+    public Customer getCustomer() {
+		return customer;
+	}
+    
+    public String getPickupBranch() {
+		return pickupBranch;
+	}
+    
+    public String getReturnBranch() {
+		return returnBranch;
+	}
+    
+    public Date getPickupDate() {
+		return pickupDate;
+	}
+    
+    public Date getReturnDate() {
+		return returnDate;
+	}
+    
+    public String getModelNumber() {
+		return modelNumber;
+	}
+    
+    public String getRegNum() {
+		return regNum;
+	}
 
     public String getRealReturnBranch() {
         return realReturnBranch;

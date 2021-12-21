@@ -6,16 +6,16 @@ public class Model {
     private Transmission transmission;
     private float consumption;
     private int numDoor;
-
+    private Group group;
     private List<Car> carList;
 
-    public Model(String number, String name, Transmission transmission,
-                 float consumption, int numDoor) {
+    public Model(String number, String name, Transmission transmission, float consumption, int numDoor, Group group) {
         this.number = number;
         this.name = name;
         this.transmission = transmission;
         this.consumption = consumption;
         this.numDoor = numDoor;
+        this.group = group;
     }
 
     public String getNumber() {
@@ -25,6 +25,26 @@ public class Model {
     public List<Car> getCarList() {
         return carList;
     }
+    
+    public String getName() {
+		return name;
+	}
+    
+    public float getConsumption() {
+		return consumption;
+	}
+    
+    public Transmission getTransmission() {
+		return transmission;
+	}
+    
+    public Group getGroup() {
+		return group;
+	}
+    
+    public int getNumDoor() {
+		return numDoor;
+	}
 
     public void setCarList(List<Car> carList) {
         this.carList = carList;

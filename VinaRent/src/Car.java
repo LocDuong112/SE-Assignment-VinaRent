@@ -2,7 +2,7 @@ public class Car {
     private int regNum;
     private String color;
     private String modelNumber;
-    private String status;
+    private Status status;
     private String branchNumber;
     private int year;
 
@@ -12,10 +12,30 @@ public class Car {
         this.year = year;
         this.modelNumber = modelNumber;
         this.branchNumber = branchNumber;
-        this.status = "RENT-READY";
+        this.status = Status.READY;
     }
 
     public int getRegNum() {
         return regNum;
     }
+    
+    public String getColor() {
+		return color;
+	}
+    
+    public String getModelNumber() {
+		return modelNumber;
+	}
+    
+    public String getBranchNumber() {
+		return branchNumber;
+	}
+    
+    public Status getStatus() {
+		return status;
+	}
+    
+    public int getYear() {
+		return year;
+	}
 }

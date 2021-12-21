@@ -1,2 +1,5 @@
-public class Transmission {
+
+public enum Transmission {
+	automatic,
+	manual
 }
