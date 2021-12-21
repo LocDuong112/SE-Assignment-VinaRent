@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Branch {
@@ -6,11 +7,13 @@ public class Branch {
     private List<Branch> neighborList;
     private List<Car> carList;
     private String name;
+    private HashMap<Group, Rental> rentalGroup;
 
     public Branch(String branchNumber) {
         this.branchNumber = branchNumber;
         this.carList = new ArrayList<>();
         this.neighborList = new ArrayList<>();
+        this.rentalGroup = new HashMap<>();
     }
     
     public Branch(String branchNumber, String name) {
@@ -29,6 +32,10 @@ public class Branch {
     public List<Car> getCarlList() {
         return carList;
     }
+    
+    public HashMap<Group, Rental> getRentalGroup() {
+		return rentalGroup;
+	}
 
     public void setBranchNumber(String branchNumber) {
         this.branchNumber = branchNumber;

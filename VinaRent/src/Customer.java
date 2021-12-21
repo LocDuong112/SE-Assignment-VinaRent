@@ -3,12 +3,14 @@ public class Customer {
     private String driveLicense;
     private String email;
     private String phone;
+    private CustomerStatus status;
 
     public Customer(String name, String driveLicense, String email, String phone) {
         this.name = name;
         this.driveLicense = driveLicense;
         this.email = email;
         this.phone = phone;
+        this.status = CustomerStatus.NORMAL;
     }
 
     public String getName() {
@@ -25,5 +27,9 @@ public class Customer {
     
     public String getPhone() {
 		return phone;
+	}
+    
+    public CustomerStatus getStatus() {
+		return status;
 	}
 }

@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,7 +10,6 @@ public class VinaRentSystem {
     private List<Car> carList;
     private List<Customer> customerList;
     private List<Rental> rentalList;
-    private List<Customer> blacklist;
 
     public VinaRentSystem() {
         this.branchList = new ArrayList<>();
@@ -16,10 +17,10 @@ public class VinaRentSystem {
         this.carList = new ArrayList<>();
         this.customerList = new ArrayList<>();
         this.rentalList = new ArrayList<>();
-        this.blacklist = new ArrayList<>();
     }
 
  // ---------------------------------- PRIVATE METHODS ---------------------------------- //
+    
     private Branch getBranch(String branchNumber) throws Exception{
     	Iterator<Branch> itr = branchList.iterator();
     	while(itr.hasNext()) {
@@ -46,11 +47,37 @@ public class VinaRentSystem {
 		throw new Exception(msg);
     }
     
+    private Customer getCustomer(String driverLicense) throws Exception{
+    	Iterator<Customer> itr = customerList.iterator();
+    	while (itr.hasNext()) {
+			Customer customer = (Customer) itr.next();
+			if (customer.getDriveLicense().equals(driverLicense))
+				return customer;
+		}
+    	
+    	String msg = "Error: No customer found!";
+		System.out.println(msg);
+		throw new Exception(msg);
+    }
+    
+    private Rental getRental(String rentalNumber) throws Exception {
+    	Iterator<Rental> itr = rentalList.iterator();
+    	while (itr.hasNext()) {
+			Rental rental = (Rental) itr.next();
+			if (rental.getNumber().equals(rentalNumber))
+				return rental;
+		}
+    	
+    	String msg = "Error: No rental found!";
+		System.out.println(msg);
+		throw new Exception(msg);
+    }
+    
  // ------------------------------ END OF PRIVATE METHODS ------------------------------- //
     
     
     
-    // Add a branch
+    // 1. Add a branch
     public void addBranch(String branchNumber, String name) throws Exception {
         // check if the branchNumber is duplicated
         for (Branch branch : branchList) {
@@ -65,7 +92,7 @@ public class VinaRentSystem {
         branchList.add(newBranch);
     }
 
-    // Make a pair of branches neighbors to each other
+    // 2. Make a pair of branches neighbors to each other
     public void makeNeighbor(String branch1, String branch2) throws Exception {
         // check if branch 1 and branch 2 exist
         Branch b1 = getBranch(branch1);
@@ -85,7 +112,7 @@ public class VinaRentSystem {
         b2.getNeighborList().add(b1);
     }
 
-    // Add a model
+    // 4. Add a model
     public void addModel(String number, String name, Transmission transmission,
                          float consumption, int numDoor, Group group) throws Exception {
         // check if modelNumber exists
@@ -101,7 +128,7 @@ public class VinaRentSystem {
         modelList.add(newModel);
     }
 
-    // Add a car
+    // 5. Add a car
     public void addCar(int regNum, String color, int year,
                        String modelNumber, String branchNumber) throws Exception {
         // check regNum
@@ -125,5 +152,40 @@ public class VinaRentSystem {
 
         // add new car to carList in model
         model.getCarList().add(newCar);
+    }
+    
+    // 6. Add a customer
+    public void addCustomer(String name, String driverLicense, String email, String phone) throws Exception {
+    	
+    	// check if driverLicense does not exist
+    	Iterator<Customer> itr = customerList.iterator();
+    	while (itr.hasNext()) {
+    		Customer customer = itr.next();
+    		if (customer.getDriveLicense().equals(driverLicense)) {
+    			String msg = "Error: Customer already existed!";
+    			System.out.println(msg);
+    			throw new Exception(msg);
+    		}
+    	}
+    	
+    	// create and add new customer to list
+    	customerList.add(new Customer(name, driverLicense, email, phone));
+    }
+    
+    // 7. List cars that are available at a specified branch and belong to a specified rental group
+    // 	  (do not include the cars at neighbor branches)
+//    public Car listCar(String branchNumber, Group group) throws Exception {
+//    	// check if branchNumber exists
+//    	getBranch(branchNumber);
+//    	
+//    	// return the rentals 
+//    }
+    
+    // 8. Record the return of a car
+    public void recordReturn(String rentalNumber, Date realReturnDate) throws Exception {
+    	// check if rentalNumber exists
+    	Rental rental = getRental(rentalNumber);
+    	
+    	
     }
 }

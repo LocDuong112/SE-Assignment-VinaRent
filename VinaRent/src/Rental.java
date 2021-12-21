@@ -1,13 +1,15 @@
 import java.util.Date;
 
 public class Rental {
+	private String number;
     private Customer customer;
     private String pickupBranch, returnBranch, realReturnBranch;
     private Date pickupDate, returnDate, realReturnDate;
     private String modelNumber;
     private String regNum;
+    private RentalStatus status;
 
-    public Rental(Customer customer, String pickupBranch, String returnBranch,
+    public Rental(String number, Customer customer, String pickupBranch, String returnBranch,
                   Date pickupDate, Date returnDate, String modelNumber, String regNum) {
         this.customer = customer;
         this.pickupBranch = pickupBranch;
@@ -16,6 +18,7 @@ public class Rental {
         this.returnDate = returnDate;
         this.modelNumber = modelNumber;
         this.regNum = regNum;
+        this.status = RentalStatus.NOT_RETURNED;
     }
     
     public Customer getCustomer() {
@@ -44,6 +47,14 @@ public class Rental {
     
     public String getRegNum() {
 		return regNum;
+	}
+    
+    public RentalStatus getStatus() {
+		return status;
+	}
+    
+    public String getNumber() {
+		return number;
 	}
 
     public String getRealReturnBranch() {
