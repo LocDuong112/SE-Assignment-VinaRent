@@ -7,14 +7,14 @@ public class Branch {
     private List<Branch> neighborList;
     private List<Car> carList;
     private String name;
-    private HashMap<Group, List<Rental>> rentalGroup;
+    private Multimap<Group, Rental> rentalGroup;
     private List<Rental> rentalList;
 
     public Branch(String branchNumber) {
         this.branchNumber = branchNumber;
         this.carList = new ArrayList<>();
         this.neighborList = new ArrayList<>();
-        this.rentalGroup = new HashMap<>();
+        this.rentalGroup = new Multimap<>();
         this.rentalList = new ArrayList<>();
     }
     
@@ -39,7 +39,7 @@ public class Branch {
         return carList;
     }
     
-    public HashMap<Group, List<Rental>> getRentalGroup() {
+    public Multimap<Group, Rental> getRentalGroup() {
 		return rentalGroup;
 	}
     

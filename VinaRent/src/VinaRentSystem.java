@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -116,44 +115,12 @@ public class VinaRentSystem {
     // 3. Add a car rental group
     public void addRentalGroup() throws Exception {    	
     	// iterate through branch list and add rentals to according rental group at its branch
-    	Iterator<Branch> BrItr = branchList.iterator();
-    	while (BrItr.hasNext()) {
-			Branch branch = (Branch) BrItr.next();
-			List<Rental> rentalGrpA = new ArrayList<>();
-			List<Rental> rentalGrpB = new ArrayList<>();
-			List<Rental> rentalGrpC = new ArrayList<>();
-			List<Rental> rentalGrpD = new ArrayList<>();
-			List<Rental> rentalGrpE = new ArrayList<>();
-			
-			Iterator<Rental> RItr = branch.getRentalList().iterator();
-			while (RItr.hasNext()) {
-				Rental rental = (Rental) RItr.next();
-				Group group = getModel(rental.getModelNumber()).getGroup();
-				
-				switch (group) {
-				case A: {
-					rentalGrpA.add(rental);
-				}
-				case B: {
-					rentalGrpB.add(rental);
-				}
-				case C: {
-					rentalGrpC.add(rental);
-				}
-				case D: {
-					rentalGrpD.add(rental);
-				}
-				case E: {
-					rentalGrpE.add(rental);
-				}
-				default:
-				}
-			}
-			branch.getRentalGroup().put(Group.A, rentalGrpA);
-			branch.getRentalGroup().put(Group.A, rentalGrpB);
-			branch.getRentalGroup().put(Group.A, rentalGrpC);
-			branch.getRentalGroup().put(Group.A, rentalGrpD);
-			branch.getRentalGroup().put(Group.A, rentalGrpE);
+    	Iterator<Rental> itr = rentalList.iterator();
+    	while (itr.hasNext()) {
+			Rental rental = (Rental) itr.next();
+			Branch branch = getBranch(rental.getCar().getBranchNumber());
+			Group group = getModel(rental.getModelNumber()).getGroup();
+			branch.getRentalGroup().put(group, rental);
 		}
     }
 
