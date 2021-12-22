@@ -1,5 +1,6 @@
 
 public enum CustomerStatus {
 	NORMAL,
-	BLACKLISTED
+	BLACKLISTED,
+	DISCOUNT
 }
