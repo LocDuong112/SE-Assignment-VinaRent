@@ -19,7 +19,7 @@ public class VinaRentSystem {
         this.rentalList = new ArrayList<>();
     }
 
- // ---------------------------------- PRIVATE METHODS ---------------------------------- //
+// ---------------------------------- PRIVATE METHODS ---------------------------------- //
     
     private Branch getBranch(String branchNumber) throws Exception{
     	Iterator<Branch> itr = branchList.iterator();
@@ -73,10 +73,11 @@ public class VinaRentSystem {
 		throw new Exception(msg);
     }
     
- // ------------------------------ END OF PRIVATE METHODS ------------------------------- //
+// ------------------------------ END OF PRIVATE METHODS ------------------------------- //
     
     
     
+// --------------------------------- ATOMIC USE CASES ---------------------------------- // 
     // 1. Add a branch
     public void addBranch(String branchNumber, String name) throws Exception {
         // check if the branchNumber is duplicated
@@ -111,6 +112,50 @@ public class VinaRentSystem {
         b1.getNeighborList().add(b2);
         b2.getNeighborList().add(b1);
     }
+    
+    // 3. Add a car rental group
+    public void addRentalGroup() throws Exception {    	
+    	// iterate through branch list and add rentals to according rental group at its branch
+    	Iterator<Branch> BrItr = branchList.iterator();
+    	while (BrItr.hasNext()) {
+			Branch branch = (Branch) BrItr.next();
+			List<Rental> rentalGrpA = new ArrayList<>();
+			List<Rental> rentalGrpB = new ArrayList<>();
+			List<Rental> rentalGrpC = new ArrayList<>();
+			List<Rental> rentalGrpD = new ArrayList<>();
+			List<Rental> rentalGrpE = new ArrayList<>();
+			
+			Iterator<Rental> RItr = branch.getRentalList().iterator();
+			while (RItr.hasNext()) {
+				Rental rental = (Rental) RItr.next();
+				Group group = getModel(rental.getModelNumber()).getGroup();
+				
+				switch (group) {
+				case A: {
+					rentalGrpA.add(rental);
+				}
+				case B: {
+					rentalGrpB.add(rental);
+				}
+				case C: {
+					rentalGrpC.add(rental);
+				}
+				case D: {
+					rentalGrpD.add(rental);
+				}
+				case E: {
+					rentalGrpE.add(rental);
+				}
+				default:
+				}
+			}
+			branch.getRentalGroup().put(Group.A, rentalGrpA);
+			branch.getRentalGroup().put(Group.A, rentalGrpB);
+			branch.getRentalGroup().put(Group.A, rentalGrpC);
+			branch.getRentalGroup().put(Group.A, rentalGrpD);
+			branch.getRentalGroup().put(Group.A, rentalGrpE);
+		}
+    }
 
     // 4. Add a model
     public void addModel(String number, String name, Transmission transmission,
@@ -129,7 +174,7 @@ public class VinaRentSystem {
     }
 
     // 5. Add a car
-    public void addCar(int regNum, String color, int year,
+    public void addCar(String regNum, String color, int year,
                        String modelNumber, String branchNumber) throws Exception {
         // check regNum
         for (Car car: carList) {
@@ -148,7 +193,7 @@ public class VinaRentSystem {
         // Create and add a new car to list
         Car newCar = new Car(regNum, color, year, modelNumber, branchNumber);
         carList.add(newCar);
-        branch.getCarlList().add(newCar);
+        branch.getCarList().add(newCar);
 
         // add new car to carList in model
         model.getCarList().add(newCar);
@@ -174,18 +219,45 @@ public class VinaRentSystem {
     
     // 7. List cars that are available at a specified branch and belong to a specified rental group
     // 	  (do not include the cars at neighbor branches)
-//    public Car listCar(String branchNumber, Group group) throws Exception {
-//    	// check if branchNumber exists
-//    	getBranch(branchNumber);
-//    	
-//    	// return the rentals 
-//    }
+    public List<Car> listCar(String branchNumber, Group group) throws Exception {
+    	// check if branchNumber exists
+    	Branch branch =  getBranch(branchNumber);
+    	
+    	// return the car list
+    	List<Rental> rentalList = new ArrayList<>(branch.getRentalGroup().get(group));
+    	List<Car> carList = new ArrayList<>();
+    	for (Rental r : rentalList) {
+    		carList.add(r.getCar());
+    	}
+    	return carList;
+    }
     
     // 8. Record the return of a car
-    public void recordReturn(String rentalNumber, Date realReturnDate) throws Exception {
+    public void recordReturn(String rentalNumber, Date realReturnDate, String realReturnBranchNo) throws Exception {
     	// check if rentalNumber exists
     	Rental rental = getRental(rentalNumber);
     	
+    	// check if realReturnBranch exists
+    	Branch newBranch = getBranch(realReturnBranchNo);
     	
+    	// check if the rental is not returned
+    	if (rental.getStatus().equals(RentalStatus.RETURNED)) {
+    		String msg = "Error: The rental has already returned!";
+			System.out.println(msg);
+			throw new Exception(msg);
+    	}
+    	
+    	// update real return date, real return branch, car status, rental status
+    	rental.setRealReturnBranch(realReturnBranchNo);
+    	rental.setRealReturnDate(realReturnDate);
+    	rental.setStatus(RentalStatus.RETURNED);
+    	Car car = rental.getCar();
+    	car.setStatus(Status.RETURNED);
+    	if (!car.getBranchNumber().equals(realReturnBranchNo)) {
+    		getBranch(car.getBranchNumber()).getCarList().remove(car);
+    		newBranch.getCarList().add(car);
+    		car.setBranchNumber(realReturnBranchNo);
+    	}
     }
+// ----------------------------- END OF ATOMIC USE CASES ------------------------------- // 
 }

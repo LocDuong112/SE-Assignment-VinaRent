@@ -1,12 +1,12 @@
 public class Car {
-    private int regNum;
+    private String regNum;
     private String color;
     private String modelNumber;
     private Status status;
     private String branchNumber;
     private int year;
 
-    public Car(int regNum, String color, int year, String modelNumber, String branchNumber) {
+    public Car(String regNum, String color, int year, String modelNumber, String branchNumber) {
         this.regNum = regNum;
         this.color = color;
         this.year = year;
@@ -15,7 +15,7 @@ public class Car {
         this.status = Status.READY;
     }
 
-    public int getRegNum() {
+    public String getRegNum() {
         return regNum;
     }
     
@@ -31,8 +31,16 @@ public class Car {
 		return branchNumber;
 	}
     
+    public void setBranchNumber(String branchNumber) {
+		this.branchNumber = branchNumber;
+	}
+    
     public Status getStatus() {
 		return status;
+	}
+    
+    public void setStatus(Status status) {
+		this.status = status;
 	}
     
     public int getYear() {

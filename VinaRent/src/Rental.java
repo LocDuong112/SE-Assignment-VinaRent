@@ -8,6 +8,7 @@ public class Rental {
     private String modelNumber;
     private String regNum;
     private RentalStatus status;
+    private Car car;
 
     public Rental(String number, Customer customer, String pickupBranch, String returnBranch,
                   Date pickupDate, Date returnDate, String modelNumber, String regNum) {
@@ -53,8 +54,20 @@ public class Rental {
 		return status;
 	}
     
+    public void setStatus(RentalStatus status) {
+		this.status = status;
+	}
+    
     public String getNumber() {
 		return number;
+	}
+    
+    public Car getCar() {
+		return car;
+	}
+    
+    public void setCar(String regNum, String color, int year, String modelNumber, String branchNumber) {
+		this.car = new Car(regNum, color, year, modelNumber, branchNumber);
 	}
 
     public String getRealReturnBranch() {

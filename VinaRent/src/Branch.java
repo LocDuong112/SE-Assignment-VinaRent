@@ -7,13 +7,15 @@ public class Branch {
     private List<Branch> neighborList;
     private List<Car> carList;
     private String name;
-    private HashMap<Group, Rental> rentalGroup;
+    private HashMap<Group, List<Rental>> rentalGroup;
+    private List<Rental> rentalList;
 
     public Branch(String branchNumber) {
         this.branchNumber = branchNumber;
         this.carList = new ArrayList<>();
         this.neighborList = new ArrayList<>();
         this.rentalGroup = new HashMap<>();
+        this.rentalList = new ArrayList<>();
     }
     
     public Branch(String branchNumber, String name) {
@@ -24,17 +26,25 @@ public class Branch {
     public String getBranchNumber() {
         return branchNumber;
     }
+    
+    public String getName() {
+		return name;
+	}
 
     public List<Branch> getNeighborList() {
         return neighborList;
     }
 
-    public List<Car> getCarlList() {
+    public List<Car> getCarList() {
         return carList;
     }
     
-    public HashMap<Group, Rental> getRentalGroup() {
+    public HashMap<Group, List<Rental>> getRentalGroup() {
 		return rentalGroup;
+	}
+    
+    public List<Rental> getRentalList() {
+		return rentalList;
 	}
 
     public void setBranchNumber(String branchNumber) {
