@@ -1,27 +1,33 @@
 import java.util.Date;
 
 public class Rental {
-    private static int number = 0;
+    private String number;
     private Customer customer;
     private String pickupBranch, returnBranch, realReturnBranch;
     private Date pickupDate, returnDate, realReturnDate;
     private String modelNumber;
-    private String regNum;
     private RentalStatus status;
     private Car car;
 
     public Rental(Customer customer, String pickupBranch, String returnBranch,
-                  Date pickupDate, Date returnDate, String modelNumber, String regNum) {
+                  Date pickupDate, Date returnDate, String modelNumber, Car car) {
         this.customer = customer;
         this.pickupBranch = pickupBranch;
         this.returnBranch = returnBranch;
         this.pickupDate = pickupDate;
         this.returnDate = returnDate;
         this.modelNumber = modelNumber;
-        this.regNum = regNum;
+        this.car = car;
         this.status = RentalStatus.NOT_RETURNED;
-        number = number + 1;
+        this.number = generateNumber();
     }
+    
+    private String generateNumber() {
+		String result = String.format(customer.getDriveLicense(), null);
+		result += String.format("-", null);
+		result += String.format(pickupDate.toString(), null);
+		return result;
+	}
     
     public Customer getCustomer() {
 		return customer;
@@ -47,10 +53,6 @@ public class Rental {
 		return modelNumber;
 	}
     
-    public String getRegNum() {
-		return regNum;
-	}
-    
     public RentalStatus getStatus() {
 		return status;
 	}
@@ -59,16 +61,16 @@ public class Rental {
 		this.status = status;
 	}
     
-    public int getNumber() {
-		return number;
+    public String getNumber() {
+		return this.number;
 	}
     
     public Car getCar() {
 		return car;
 	}
     
-    public void setCar(String regNum, String color, int year, String modelNumber, String branchNumber) {
-		this.car = new Car(regNum, color, year, modelNumber, branchNumber);
+    public void setCar(Car car) {
+		this.car = car;
 	}
 
     public String getRealReturnBranch() {

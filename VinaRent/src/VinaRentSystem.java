@@ -9,6 +9,7 @@ public class VinaRentSystem {
     private List<Car> carList;
     private List<Customer> customerList;
     private List<Rental> rentalList;
+    private List<Customer> blacklist;
 
     public VinaRentSystem() {
         this.branchList = new ArrayList<>();
@@ -16,6 +17,7 @@ public class VinaRentSystem {
         this.carList = new ArrayList<>();
         this.customerList = new ArrayList<>();
         this.rentalList = new ArrayList<>();
+        this.blacklist = new ArrayList<>();
     }
 
 // ---------------------------------- PRIVATE METHODS ---------------------------------- //
@@ -59,11 +61,11 @@ public class VinaRentSystem {
 		throw new Exception(msg);
     }
     
-    private Rental getRental(int rentalNumber) throws Exception {
+    private Rental getRental(String rentalNumber) throws Exception {
     	Iterator<Rental> itr = rentalList.iterator();
     	while (itr.hasNext()) {
 			Rental rental = (Rental) itr.next();
-			if (rental.getNumber() == rentalNumber)
+			if (rental.getNumber().equals(rentalNumber))
 				return rental;
 		}
     	
@@ -72,60 +74,65 @@ public class VinaRentSystem {
 		throw new Exception(msg);
     }
 
+    private Car getCar(String regNum) throws Exception {
+    	Iterator<Car> itr = carList.iterator();
+    	while (itr.hasNext()) {
+			Car car = (Car) itr.next();
+			if (car.getRegNum().equals(regNum))
+				return car;
+		}
+    	
+    	String msg = "Error: No rental found!";
+		System.out.println(msg);
+		throw new Exception(msg);
+    }
+    
 	// check if there is available car in a branch or neighbor branch
 	// return a car if exists
-	private Car findCar(String modelNum, String regNum, String branchNumber) throws Exception {
-		// check if modelNum exists
-		Model model = getModel(modelNum);
-
-		// check if regNum exists
-		boolean checkCar = false;
-		for (Car car : carList) {
-			if (car.getRegNum().equals(regNum)) {
-				checkCar = true;
-				break;
+	private Car findCar(String modelNum, String color, int year, String branchNumber) throws Exception {
+		// check if modelNum and branchNumber exist, then get a list of available cars
+		List<Car> availableCars = new ArrayList<>();
+		availableCars = findCars(modelNum, branchNumber);
+		
+		// search for car with specified properties
+		for (Car c : availableCars) {
+			if (c.getColor().equals(color) && c.getYear() == year)
+				return c;
+		}
+		
+		// if this branch does not have the car
+		Branch thisBranch = getBranch(branchNumber);
+		for (Branch b : thisBranch.getNeighborList()) {
+			availableCars.clear();
+			availableCars = findCars(modelNum, b.getBranchNumber());
+			for (Car c : availableCars) {
+				if (c.getColor().equals(color) && c.getYear() == year)
+					return c;
 			}
 		}
-		if (!checkCar) {
-			String msg = "Error: No car has that regNum";
-			throw new Exception(msg);
+		
+		// if no car is found
+		String msg = "Error: No car found!";
+		System.out.println(msg);
+		throw new Exception(msg);
+	}
+	
+	private List<Car> findCars(String modelNumber, String branchNumber) throws Exception {
+		// check if modelNumber exists
+		getModel(modelNumber);
+		
+		// check if branchNumber exists
+		Branch branch =  getBranch(branchNumber);
+		
+		// return available cars at the branch with given model
+		List<Car> availableCars = new ArrayList<>();
+		Iterator<Car> itr = branch.getCarList().iterator();
+		while (itr.hasNext()) {
+			Car car = (Car) itr.next();
+			if (car.getModelNumber().equals(modelNumber) && car.getStatus().equals(Status.READY))
+				availableCars.add(car);
 		}
-
-		// check branchNumber exists
-		Branch branch = getBranch(branchNumber);
-
-		// Find car of this model in this branch
-		checkCar = false;
-		for (Car car : model.getCarList()) {
-			if (car.getBranchNumber() == branchNumber) {
-				if ((car.getRegNum() == regNum) && (car.getStatus() == Status.READY)) {
-					checkCar = true;
-					return car;
-				}
-			}
-		}
-		// Find car of this model in neighbor branches
-		if (!checkCar) {
-			for (Branch b : branch.getNeighborList()) {
-
-				for (Car car : model.getCarList()) {
-					if (car.getBranchNumber() == branchNumber) {
-						if ((car.getRegNum() == regNum) && (car.getStatus() == Status.READY)) {
-							checkCar = true;
-							return car;
-						}
-					}
-				}
-
-			}
-		}
-
-		if (!checkCar) {
-			String msg = "Error: No car is available near this branch";
-			throw new Exception(msg);
-		}
-
-		return null;
+		return availableCars;
 	}
     
 // ------------------------------ END OF PRIVATE METHODS ------------------------------- //
@@ -171,67 +178,22 @@ public class VinaRentSystem {
     // 3. Add a car rental group
     public void addRentalGroup() throws Exception {    	
     	// iterate through branch list and add rentals to according rental group at its branch
-    	Iterator<Rental> itr = rentalList.iterator();
+    	Iterator<Branch> itr = branchList.iterator();
+    	while (itr.hasNext()) {
+			Branch branch = (Branch) itr.next();
+			addRentalGroup(branch);
+		}
+    }
+    
+    public void addRentalGroup(Branch branch) throws Exception {
+    	// add rentals to rental group
+    	Iterator<Rental> itr = branch.getRentalList().iterator();
     	while (itr.hasNext()) {
 			Rental rental = (Rental) itr.next();
-			Branch branch = getBranch(rental.getCar().getBranchNumber());
 			Group group = getModel(rental.getModelNumber()).getGroup();
 			branch.getRentalGroup().put(group, rental);
 		}
     }
-
-    public void addRentalGroup(String pickupBranch, String returnBranch, Date pickupDate, Date returnDate,
-							   Group group, String modelNumber,
-							   String regNum, String driverLicense) throws Exception {
-
-    	// check if pickupBranch exists
-		Branch pickupBr = getBranch(pickupBranch);
-
-		// check if returnBranch exists
-		getBranch(returnBranch);
-
-		// check if driverLicense exists, if not, then ask info and create a new customer
-		try {
-			Customer customer = getCustomer(driverLicense);
-		} catch (Exception e) {
-			System.out.println("Need to add info to the new customer.");
-			String nameTmp = "Test1";
-			String driverLicenseTmp = driverLicense;
-			String emailTmp = "Test1@mail";
-			String phoneTmp = "Test1Phone";
-
-			addCustomer(nameTmp, driverLicenseTmp, emailTmp, phoneTmp);
-		}
-
-		// Check if customer is in Blacklist
-		Customer customer = getCustomer(driverLicense);
-		if (customer.getStatus() == CustomerStatus.BLACKLISTED) {
-			String msg = "The customer is in BLACKLIST";
-			throw new Exception(msg);
-		}
-
-		// check if model number is right
-		Model model = getModel(modelNumber);
-
-		// check if there is an available car of the model
-		Car car = findCar(modelNumber, regNum, pickupBranch);
-
-		// set status of the car to HELD and wait for the customer last decision
-		car.setStatus(Status.HELD);
-
-		// Waiting. . .
-
-		// set status of the car to RESERVED
-		car.setStatus(Status.RESERVED);
-
-		// Create and add a new rental to rentalList
-		Rental newRental = new Rental(customer, pickupBranch, returnBranch,
-				pickupDate, returnDate, modelNumber, regNum);
-		rentalList.add(newRental);
-
-		// Add new rental to rentalGroup
-		pickupBr.getRentalGroup().put(group, newRental);
-	}
 
     // 4. Add a model
     public void addModel(String number, String name, Transmission transmission,
@@ -309,7 +271,7 @@ public class VinaRentSystem {
     }
     
     // 8. Record the return of a car
-    public void recordReturn(int rentalNumber, Date realReturnDate, String realReturnBranchNo) throws Exception {
+    public void recordReturn(String rentalNumber, Date realReturnDate, String realReturnBranchNo) throws Exception {
     	// check if rentalNumber exists
     	Rental rental = getRental(rentalNumber);
     	
@@ -335,5 +297,54 @@ public class VinaRentSystem {
     		car.setBranchNumber(realReturnBranchNo);
     	}
     }
-// ----------------------------- END OF ATOMIC USE CASES ------------------------------- // 
+// ----------------------------- END OF ATOMIC USE CASES ------------------------------- //
+    
+    
+    // BP1. Add rental
+	public void addRental(String pickupBranch, String returnBranch, Date pickupDate, Date returnDate,
+			String modelNumber, String color, int year, String driverLicense) throws Exception {
+
+		// check if pickupBranch exists
+		Branch pickupBr = getBranch(pickupBranch);
+
+		// check if returnBranch exists
+		getBranch(returnBranch);
+
+		// check if driverLicense exists, if not, then ask info and create a new customer
+		try {
+			getCustomer(driverLicense);
+		} catch (Exception e) {
+			addCustomer(null, driverLicense, null, null);
+		}
+
+		// Check if customer is in Blacklist
+		Customer customer = getCustomer(driverLicense);
+		if (blacklist.contains(customer)) {
+			String msg = "The customer is in BLACKLIST";
+			System.out.println(msg);
+			throw new Exception(msg);
+		}
+
+		// check if model number is right
+		getModel(modelNumber);
+
+		// check if there is an available car of the model
+		Car car = findCar(modelNumber, color, year, pickupBranch);
+
+		// set status of the car to HELD and wait for the customer last decision
+		car.setStatus(Status.HELD);
+
+		// Waiting. . .
+
+		// set status of the car to RESERVED
+		car.setStatus(Status.RESERVED);
+
+		// Create and add a new rental to rentalList
+		Rental newRental = new Rental(customer, pickupBranch, returnBranch, pickupDate, returnDate, modelNumber, car);
+		rentalList.add(newRental);
+
+		// Add new rental to rentalGroup
+		Group group = getModel(newRental.getModelNumber()).getGroup();
+		pickupBr.getRentalGroup().put(group, newRental);
+	}
 }
