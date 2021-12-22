@@ -1,7 +1,7 @@
 import java.util.Date;
 
 public class Rental {
-	private String number;
+    private static int number = 0;
     private Customer customer;
     private String pickupBranch, returnBranch, realReturnBranch;
     private Date pickupDate, returnDate, realReturnDate;
@@ -10,7 +10,7 @@ public class Rental {
     private RentalStatus status;
     private Car car;
 
-    public Rental(String number, Customer customer, String pickupBranch, String returnBranch,
+    public Rental(Customer customer, String pickupBranch, String returnBranch,
                   Date pickupDate, Date returnDate, String modelNumber, String regNum) {
         this.customer = customer;
         this.pickupBranch = pickupBranch;
@@ -20,6 +20,7 @@ public class Rental {
         this.modelNumber = modelNumber;
         this.regNum = regNum;
         this.status = RentalStatus.NOT_RETURNED;
+        number = number + 1;
     }
     
     public Customer getCustomer() {
@@ -58,7 +59,7 @@ public class Rental {
 		this.status = status;
 	}
     
-    public String getNumber() {
+    public int getNumber() {
 		return number;
 	}
     

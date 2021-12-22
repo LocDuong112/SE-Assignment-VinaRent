@@ -59,11 +59,11 @@ public class VinaRentSystem {
 		throw new Exception(msg);
     }
     
-    private Rental getRental(String rentalNumber) throws Exception {
+    private Rental getRental(int rentalNumber) throws Exception {
     	Iterator<Rental> itr = rentalList.iterator();
     	while (itr.hasNext()) {
 			Rental rental = (Rental) itr.next();
-			if (rental.getNumber().equals(rentalNumber))
+			if (rental.getNumber() == rentalNumber)
 				return rental;
 		}
     	
@@ -225,8 +225,7 @@ public class VinaRentSystem {
 		car.setStatus(Status.RESERVED);
 
 		// Create and add a new rental to rentalList
-		String number = "Test";
-		Rental newRental = new Rental(number, customer, pickupBranch, returnBranch,
+		Rental newRental = new Rental(customer, pickupBranch, returnBranch,
 				pickupDate, returnDate, modelNumber, regNum);
 		rentalList.add(newRental);
 
@@ -310,7 +309,7 @@ public class VinaRentSystem {
     }
     
     // 8. Record the return of a car
-    public void recordReturn(String rentalNumber, Date realReturnDate, String realReturnBranchNo) throws Exception {
+    public void recordReturn(int rentalNumber, Date realReturnDate, String realReturnBranchNo) throws Exception {
     	// check if rentalNumber exists
     	Rental rental = getRental(rentalNumber);
     	
