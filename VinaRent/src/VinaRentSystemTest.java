@@ -89,7 +89,7 @@ public class VinaRentSystemTest {
         vrs.addModel("Model2","ModelName2",Transmission.automatic,
                 1.2f, 2, Group.B);
 
-        // Different in Model Number is enough
+        // Different in Model Number is enough to create a new model
         vrs.addModel("Model3","ModelName1",Transmission.automatic,
                 0.5f, 4, Group.A);
 
@@ -164,5 +164,60 @@ public class VinaRentSystemTest {
         } catch (Exception e) {
             System.out.println(vrs.toString("car"));
         }
+    }
+
+    @Test
+    public void addCustomerTest() throws Exception {
+        System.out.println("\nTesting for addCustomer(name, driverLicense, email, phone)");
+
+        VinaRentSystem vrs = new VinaRentSystem();
+
+        // add normal customers
+        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
+        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+
+        // Different in driver license is enough to create a new customer
+        vrs.addCustomer("Customer1", "license3", "email1", "phone1");
+
+        System.out.println(vrs.toString("customer"));
+
+        System.out.println("Print out error");
+
+        // cannot add a customer with the existed driver license
+        try {
+            vrs.addCustomer("Customer3", "license1", "email3", "phone3");
+        } catch (Exception e) {
+            System.out.println(vrs.toString("customer"));
+        }
+    }
+
+    @Test
+    public void addRentalTest() throws Exception {
+        System.out.println("\nTesting for addRental(pickupBranch, returnBranch, pickupDate, returnDate, " +
+                "modelNumber, color, year, driverLicense)");
+
+        VinaRentSystem vrs = new VinaRentSystem();
+
+        // add customers
+        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
+        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+
+        // add branches
+        vrs.addBranch("branch1","BranchName1");
+        vrs.addBranch("branch2","BranchName2");
+
+        // add models
+        vrs.addModel("model1","ModelName1",Transmission.automatic,
+                0.5f, 4, Group.A);
+        vrs.addModel("model2","ModelName2",Transmission.automatic,
+                1.2f, 2, Group.B);
+
+        // add cars
+        vrs.addCar("regNum1", "Color1", 2000,
+                "model1", "branch1");
+        vrs.addCar("regNum2", "Color2", 2009,
+                "model2", "branch1");
+
+        // add rentals
     }
 }
