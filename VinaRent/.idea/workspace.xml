@@ -25,10 +25,15 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8bb82ada-6b36-4287-b35b-644864ace9c1" name="Default Changelist" comment="4/8 functions">
-      <change beforePath="$PROJECT_DIR$/../SE2021-Assignment.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../SE2021-Assignment.pdf" afterDir="false" />
+    <list default="true" id="8bb82ada-6b36-4287-b35b-644864ace9c1" name="Default Changelist" comment="Update rental number to static">
+      <change afterPath="$PROJECT_DIR$/src/VinaRentSystemTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CustomerStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CustomerStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VinaRent.iml" beforeDir="false" afterPath="$PROJECT_DIR$/VinaRent.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Branch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Branch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rental.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rental.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VinaRentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VinaRentSystem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,7 +65,51 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Lab7/Q2" />
+  </component>
+  <component name="RunManager" selected="JUnit.VinaRentSystemTest.makeNeighborTest">
+    <configuration name="VinaRentSystemTest.AddBranchTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="VinaRent" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="VinaRentSystemTest" />
+      <option name="METHOD_NAME" value="AddBranchTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VinaRentSystemTest.addBranchTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="VinaRent" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="VinaRentSystemTest" />
+      <option name="METHOD_NAME" value="addBranchTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VinaRentSystemTest.makeNeighborTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="VinaRent" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="VinaRentSystemTest" />
+      <option name="METHOD_NAME" value="makeNeighborTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.VinaRentSystemTest.makeNeighborTest" />
+        <item itemvalue="JUnit.VinaRentSystemTest.addBranchTest" />
+        <item itemvalue="JUnit.VinaRentSystemTest.AddBranchTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -92,7 +141,21 @@
       <option name="project" value="LOCAL" />
       <updated>1640086958536</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add rental group">
+      <created>1640176949348</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1640176949348</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Update rental number to static">
+      <created>1640177243965</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1640177243965</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -129,13 +192,43 @@
     <MESSAGE value="Testing" />
     <MESSAGE value="Constructors" />
     <MESSAGE value="4/8 functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="4/8 functions" />
+    <MESSAGE value="Add rental group" />
+    <MESSAGE value="Update rental number to static" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update rental number to static" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="275" y="112" key="Vcs.Push.Dialog.v2" timestamp="1640086965789">
+    <state x="439" y="80" key="#com.intellij.ide.util.MemberChooser" timestamp="1640249843337">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="275" y="112" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1640086965789" />
+    <state x="439" y="80" key="#com.intellij.ide.util.MemberChooser/0.0.1366.768@0.0.1366.768" timestamp="1640249843337" />
+    <state x="463" y="138" key="FileChooserDialogImpl" timestamp="1640247144365">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="463" y="138" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1640247144365" />
+    <state width="1322" height="185" key="GridCell.Tab.0.bottom" timestamp="1640253555311">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1322" height="185" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1640253555311" />
+    <state width="1322" height="185" key="GridCell.Tab.0.center" timestamp="1640253555311">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1322" height="185" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1640253555311" />
+    <state width="1322" height="185" key="GridCell.Tab.0.left" timestamp="1640253555311">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1322" height="185" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1640253555311" />
+    <state width="1322" height="185" key="GridCell.Tab.0.right" timestamp="1640253555311">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1322" height="185" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1640253555311" />
+    <state x="275" y="112" key="Vcs.Push.Dialog.v2" timestamp="1640177257551">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="275" y="112" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1640177257551" />
+    <state x="387" y="272" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1640247272772">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="387" y="272" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1366.768@0.0.1366.768" timestamp="1640247272772" />
     <state x="500" y="293" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1640161181028">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

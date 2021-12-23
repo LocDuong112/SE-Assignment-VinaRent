@@ -146,6 +146,7 @@ public class VinaRentSystem {
         for (Branch branch : branchList) {
             if (branch.getBranchNumber() == branchNumber) {
                 String errMess = "Branch number is already assigned. Please replace with a new branch number.\n";
+                System.out.println(errMess);
                 throw new Exception(errMess);
             }
         }
@@ -346,5 +347,62 @@ public class VinaRentSystem {
 		// Add new rental to rentalGroup
 		Group group = getModel(newRental.getModelNumber()).getGroup();
 		pickupBr.getRentalGroup().put(group, newRental);
+	}
+
+	public String toString(String listName) {
+		String result = "";
+		switch (listName) {
+			// Branch list
+			case "branch":
+				result = String.format("%-20s | %-20s | %-20s\n", "Branch Number", "BranchName", "Neighbor Branches");
+				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+				for (Branch branch : branchList)
+					result += branch.toString();
+				break;
+
+			// Model list
+			case "model":
+				result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
+						"Model Number", "Model Name", "Transmission",
+						"Fuel Consumption", "Number of door", "Group");
+				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+				for (Model model : modelList)
+					result += model.toString();
+				break;
+
+			// Car list
+			case "car":
+				result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s\n",
+						"Registration Number", "Color", "Year",
+						"Model Number", "Branch Number");
+				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+				for (Car car : carList) {
+					result += car.toString();
+				}
+				break;
+
+			// Customer list
+			case "customer":
+				result = String.format("%-20s | %-20s | %-20s | %-20s\n",
+						"Name", "Drive License", "Email", "Phone Number");
+				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+				for (Customer customer : customerList) {
+					result += customer.toString();
+				}
+				break;
+
+			// Rental list
+			case "rental":
+				result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
+						"Number", "Status", "Customers' Name", "Customers' Drive License",
+						"Model Number", "Car's Registration Number", "Pickup Branch", "Return Branch",
+						"Pickup Date", "Return Date");
+				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+				for (Rental rental : rentalList) {
+					result += rental.toString();
+				}
+				break;
+		}
+		return result;
 	}
 }

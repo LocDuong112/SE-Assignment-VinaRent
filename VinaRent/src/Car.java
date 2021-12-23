@@ -46,4 +46,13 @@ public class Car {
     public int getYear() {
 		return year;
 	}
+
+    @Override
+    public String toString() {
+        String result = "";
+        result = String.format("%-20s | %-20s | %-20d | %-20s | %-20s\n",
+                regNum, color, year, modelNumber, branchNumber);
+
+        return result;
+    }
 }

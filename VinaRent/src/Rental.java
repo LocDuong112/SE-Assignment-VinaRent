@@ -88,4 +88,15 @@ public class Rental {
     public void setRealReturnDate(Date realReturnDate) {
         this.realReturnDate = realReturnDate;
     }
+
+    @Override
+    public String toString() {
+        String result = "";
+        result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
+                number, status.toString(), customer.getName(), customer.getDriveLicense(), modelNumber, car.getRegNum(),
+                pickupBranch, returnBranch,
+                pickupDate, returnDate);
+
+        return result;
+    }
 }

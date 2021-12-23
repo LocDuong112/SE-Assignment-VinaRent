@@ -58,4 +58,16 @@ public class Branch {
     public void setNeighborList(List<Branch> neighborList) {
         this.neighborList = neighborList;
     }
+
+    @Override
+    public String toString() {
+        String result = "";
+        result = String.format("%-20s | %-20s | ", branchNumber, name);
+        for (Branch branch : neighborList) {
+            result += String.format("%s, ", branch.getBranchNumber());
+        }
+        result += "\n";
+
+        return result;
+    }
 }

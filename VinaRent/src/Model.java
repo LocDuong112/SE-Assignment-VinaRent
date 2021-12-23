@@ -49,4 +49,13 @@ public class Model {
     public void setCarList(List<Car> carList) {
         this.carList = carList;
     }
+
+    @Override
+    public String toString() {
+        String result = "";
+        result = String.format("%-20s | %-20s | %-20s | %-20f | %-20d | %-20s\n",
+                number, name, transmission.toString(), consumption, numDoor, group.toString());
+
+        return result;
+    }
 }

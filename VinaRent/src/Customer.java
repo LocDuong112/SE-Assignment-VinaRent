@@ -26,4 +26,13 @@ public class Customer {
     public String getPhone() {
 		return phone;
 	}
+
+    @Override
+    public String toString() {
+        String result = "";
+        result = String.format("%-20s | %-20s | %-20s | %-20s\n",
+                name, driveLicense, email, phone);
+
+        return result;
+    }
 }
