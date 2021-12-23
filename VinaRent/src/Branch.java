@@ -66,6 +66,11 @@ public class Branch {
         for (Branch branch : neighborList) {
             result += String.format("%s, ", branch.getBranchNumber());
         }
+
+        result += String.format("%-20s | ","");
+        for (Car car : carList) {
+            result += String.format("%s, ", car.getRegNum());
+        }
         result += "\n";
 
         return result;

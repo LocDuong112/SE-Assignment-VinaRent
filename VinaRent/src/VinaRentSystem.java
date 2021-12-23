@@ -134,7 +134,7 @@ public class VinaRentSystem {
 		}
 		return availableCars;
 	}
-    
+
 // ------------------------------ END OF PRIVATE METHODS ------------------------------- //
     
     
@@ -203,6 +203,7 @@ public class VinaRentSystem {
         for (Model model: modelList) {
             if (model.getNumber() == number) {
                 String errMess = "Model number is already exists. Please try another model number.\n";
+                System.out.println(errMess);
                 throw new Exception(errMess);
             }
         }
@@ -219,6 +220,7 @@ public class VinaRentSystem {
         for (Car car: carList) {
             if (car.getRegNum()==regNum) {
                 String errMess = "Registration number is already exists. Please try another registration number.\n";
+                System.out.println(errMess);
                 throw new Exception(errMess);
             }
         }
@@ -226,7 +228,7 @@ public class VinaRentSystem {
         // check if branchNumber exists
         Branch branch = getBranch(branchNumber);
 
-        // check if branchNumber exists
+        // check if modelNumber exists
         Model model = getModel(modelNumber);
 
         // Create and add a new car to list
@@ -354,7 +356,8 @@ public class VinaRentSystem {
 		switch (listName) {
 			// Branch list
 			case "branch":
-				result = String.format("%-20s | %-20s | %-20s\n", "Branch Number", "BranchName", "Neighbor Branches");
+				result = String.format("%-20s | %-20s | %-20s | %-20s\n",
+						"Branch Number", "BranchName", "Neighbor Branches", "Cars list");
 				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 				for (Branch branch : branchList)
 					result += branch.toString();
@@ -362,9 +365,9 @@ public class VinaRentSystem {
 
 			// Model list
 			case "model":
-				result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
+				result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
 						"Model Number", "Model Name", "Transmission",
-						"Fuel Consumption", "Number of door", "Group");
+						"Fuel Consumption", "Number of door", "Group", "Cars list");
 				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 				for (Model model : modelList)
 					result += model.toString();
