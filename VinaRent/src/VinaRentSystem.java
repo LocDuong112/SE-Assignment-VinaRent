@@ -456,9 +456,9 @@ public class VinaRentSystem {
 		}
 		
 		else if (list.get(0) instanceof Rental) {
-			result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
-					"Number", "Status", "Customers' Name", "Customers' Drive License",
-					"Model Number", "Car's Registration Number", "Pickup Branch", "Return Branch",
+			result = String.format("%-40s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-40s | %-40s\n",
+					"Rental number", "Status", "Customers' Name", "Driver license",
+					"Model Number", "Registration Number", "Pickup Branch", "Return Branch",
 					"Pickup Date", "Return Date");
 			String endLine = result;
 			result += new String(new char[result.length()]).replace('\0', '-') + "\n";

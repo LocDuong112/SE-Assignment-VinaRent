@@ -29,6 +29,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/VinaRent/VinaRentSystemTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/VinaRent/VinaRentSystemTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Branch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Branch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/VinaRentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VinaRentSystem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VinaRentSystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VinaRentSystemTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,6 +88,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="VinaRentSystemTest.addCarTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="VinaRent" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="VinaRentSystemTest" />
+      <option name="METHOD_NAME" value="addCarTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="VinaRentSystemTest.addRentalGroupTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="VinaRent" />
       <option name="PACKAGE_NAME" value="" />
@@ -97,21 +108,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VinaRentSystemTest.listCarTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="VinaRentSystemTest.makeNeighborTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="VinaRent" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="VinaRentSystemTest" />
-      <option name="METHOD_NAME" value="listCarTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="VinaRentSystemTest.recordReturnTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="VinaRent" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="VinaRentSystemTest" />
-      <option name="METHOD_NAME" value="recordReturnTest" />
+      <option name="METHOD_NAME" value="makeNeighborTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -120,10 +121,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.VinaRentSystemTest" />
-        <item itemvalue="JUnit.VinaRentSystemTest.recordReturnTest" />
-        <item itemvalue="JUnit.VinaRentSystemTest.listCarTest" />
         <item itemvalue="JUnit.VinaRentSystemTest.addBlacklistTest" />
         <item itemvalue="JUnit.VinaRentSystemTest.addRentalGroupTest" />
+        <item itemvalue="JUnit.VinaRentSystemTest.makeNeighborTest" />
+        <item itemvalue="JUnit.VinaRentSystemTest.addCarTest" />
       </list>
     </recent_temporary>
   </component>
@@ -221,22 +222,22 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="463" y="138" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1640247144365" />
-    <state width="1322" height="242" key="GridCell.Tab.0.bottom" timestamp="1640330375165">
+    <state width="1322" height="242" key="GridCell.Tab.0.bottom" timestamp="1640326764892">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1322" height="242" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1640330375165" />
-    <state width="1322" height="242" key="GridCell.Tab.0.center" timestamp="1640330375165">
+    <state width="1322" height="242" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1640326764892" />
+    <state width="1322" height="242" key="GridCell.Tab.0.center" timestamp="1640326764892">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1322" height="242" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1640330375165" />
-    <state width="1322" height="242" key="GridCell.Tab.0.left" timestamp="1640330375165">
+    <state width="1322" height="242" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1640326764892" />
+    <state width="1322" height="242" key="GridCell.Tab.0.left" timestamp="1640326764892">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1322" height="242" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1640330375165" />
-    <state width="1322" height="242" key="GridCell.Tab.0.right" timestamp="1640330375165">
+    <state width="1322" height="242" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1640326764892" />
+    <state width="1322" height="242" key="GridCell.Tab.0.right" timestamp="1640326764892">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1322" height="242" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1640330375165" />
+    <state width="1322" height="242" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1640326764892" />
     <state x="275" y="112" key="Vcs.Push.Dialog.v2" timestamp="1640177257551">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

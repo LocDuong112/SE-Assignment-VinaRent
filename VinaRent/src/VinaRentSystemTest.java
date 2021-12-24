@@ -38,7 +38,7 @@ public class VinaRentSystemTest {
     @Test
     // 1. add a branch test
     public void addBranchTest() throws Exception {
-        System.out.println("Testing for addBranch(branchNumber, name)");
+        System.out.println("1. Testing for addBranch(branchNumber, name)");
 
         VinaRentSystem vrs = new VinaRentSystem();
 
@@ -49,14 +49,15 @@ public class VinaRentSystemTest {
         // Branch with same name but different branch number is also acceptable
         vrs.addBranch("D-TD-2"	,	"Thu Duc District Branch");
 
-        System.out.println(vrs.toString(vrs.getBranchList()));
+        System.out.println(vrs.toString(vrs.getBranchList()) + "\n");
 
         System.out.println("Print out error");
         try {
             // cannot add a branch with the existed branch number, though the name is unique
+        	System.out.println("Try to add branch with existed number (D-1)");
             vrs.addBranch("D-1", "District 5 Branch");
         } catch (Exception e) {
-        	System.out.println("The list after encounting the error\n");
+        	System.out.println("The list after encounting the error");
             System.out.println(vrs.toString(vrs.getBranchList()));
         }
     }
@@ -64,7 +65,7 @@ public class VinaRentSystemTest {
     @Test
     // 2. make neighbor test
     public void makeNeighborTest() throws Exception {
-        System.out.println("Testing for makeNeighBor(branch1, branch2)");
+        System.out.println("2. Testing for makeNeighBor(branch1, branch2)");
 
         VinaRentSystem vrs = new VinaRentSystem();
 
@@ -103,7 +104,7 @@ public class VinaRentSystemTest {
     @Test
     // 3. Add a rental group test
     public void addRentalGroupTest() throws Exception {
-        System.out.println("\nTesting for addRentalGroup()");
+        System.out.println("3. Testing for addRentalGroup()");
 
         VinaRentSystem vrs = new VinaRentSystem();
 
@@ -161,28 +162,29 @@ public class VinaRentSystemTest {
     @Test
     // 4. Add a model test
     public void addModelTest() throws Exception {
-        System.out.println("Testing for addModel(number, name, transmission, " +
+        System.out.println("4. Testing for addModel(number, name, transmission, " +
                 "consumption, numDoor, group)");
 
         VinaRentSystem vrs = new VinaRentSystem();
 
         // add normal models
-        vrs.addModel("Model1","ModelName1",Transmission.automatic,
+        vrs.addModel("HONDA100","Honda Civic",Transmission.automatic,
                 0.5f, 4, Group.A);
-        vrs.addModel("Model2","ModelName2",Transmission.automatic,
-                1.2f, 2, Group.B);
+        vrs.addModel("TOYOTA100","Toyota Camry",Transmission.automatic,
+                1.2f, 2, Group.A);
 
         // Different in Model Number is enough to create a new model
-        vrs.addModel("Model3","ModelName1",Transmission.automatic,
-                0.5f, 4, Group.A);
+        vrs.addModel("TOYOTA200","Toyota Tundra",Transmission.automatic,
+                0.5f, 4, Group.B);
 
-        System.out.println(vrs.toString(vrs.getModelList()));
+        System.out.println(vrs.toString(vrs.getModelList()) + "\n");
 
         System.out.println("Print out error");
 
         // cannot add a model with the existed model number
         try {
-            vrs.addModel("Model1","ModelName2",Transmission.automatic,
+        	System.out.println("Try to add existed model number (HONDA100)");
+            vrs.addModel("HONDA100","Honda something idk",Transmission.automatic,
                     2.3f, 4, Group.E);
         } catch (Exception e) {
             System.out.println(vrs.toString(vrs.getModelList()));
@@ -192,7 +194,7 @@ public class VinaRentSystemTest {
     @Test
     // 5. Add a car test
     public void addCarTest() throws Exception {
-        System.out.println("Testing for addCar(regNum, color, year, " +
+        System.out.println("5. Testing for addCar(regNum, color, year, " +
                 "modelNumber, branchNumber)");
 
         VinaRentSystem vrs = new VinaRentSystem();
@@ -256,7 +258,7 @@ public class VinaRentSystemTest {
     @Test
     // 6. Add a customer test
     public void addCustomerTest() throws Exception {
-        System.out.println("Testing for addCustomer(name, driverLicense, email, phone)");
+        System.out.println("6. Testing for addCustomer(name, driverLicense, email, phone)");
 
         VinaRentSystem vrs = new VinaRentSystem();
 
@@ -283,40 +285,40 @@ public class VinaRentSystemTest {
     @Test
     // 7. List cars test
     public void listCarTest() throws Exception {
-        System.out.println("\nTesting for listCar(branchNumber, group)");
+        System.out.println("7. Testing for listCar(branchNumber, group)");
 
         VinaRentSystem vrs = new VinaRentSystem();
 
         // add customers
-        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
-        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+        vrs.addCustomer("Karen", "KA789345", "karen@something.com", "098762345");
+        vrs.addCustomer("Kevin", "KE239458", "kevin@something.com", "092385762");
 
         // add branches
-        vrs.addBranch("branch1","BranchName1");
-        vrs.addBranch("branch2","BranchName2");
+        vrs.addBranch("D-1"		,	"Dist. 1 Branch");
+        vrs.addBranch("D-5"		,	"Dist. 5 Branch");
 
         // make branches become neighbor
-        vrs.makeNeighbor("branch1", "branch2");
+        vrs.makeNeighbor("D-1", "D-5");
 
         // add models
-        vrs.addModel("model1","ModelName1",Transmission.automatic,
+        vrs.addModel("HONDA100","Honda Civic",Transmission.automatic,
                 0.5f, 4, Group.A);
-        vrs.addModel("model2","ModelName2",Transmission.automatic,
+        vrs.addModel("TOYOTA100","Toyota Camry",Transmission.automatic,
                 1.2f, 2, Group.B);
 
         // add cars
-        vrs.addCar("regNum1", "Color1", 2000,
-                "model1", "branch1");
-        vrs.addCar("regNum1.1", "Color1.1", 2002,
-                "model2", "branch1");
-        vrs.addCar("regNum2", "Color2", 2009,
-                "model2", "branch2");
-        vrs.addCar("regNum2.1", "Color2.1", 2003,
-                "model2", "branch2");
+        vrs.addCar("QWERTY-1234", "red", 2000,
+                "HONDA100", "D-1");
+        vrs.addCar("ASDF-2345", "blue", 2002,
+                "HONDA100", "D-1");
+        vrs.addCar("ZXCV-7890", "green", 2009,
+                "TOYOTA100", "D-5");
+        vrs.addCar("HJKL-2346", "white", 2003,
+                "TOYOTA100", "D-5");
 
         // add string days
-        String sDate1 = "31-12-2020 23:37:50";
-        String sDate2 = "12-11-1998 11:49:12";
+        String sDate1 = "25-12-2021 23:37:50";
+        String sDate2 = "10-1-2022 11:49:12";
 
         // add date formatters
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -326,18 +328,19 @@ public class VinaRentSystemTest {
         Date date2 = formatter.parse(sDate2);
 
         // add rentals
-        vrs.addRental("branch1","branch2", date2, date1,
-                "model1", "Color1",2000,"license1");
-        vrs.addRental("branch1","branch1", date1, date1,
-                "model2", "Color2",2009,"license2");
-        vrs.addRental("branch2","branch1", date2, date2,
-                "model2", "Color1.1",2002,"license2");
+        vrs.addRental("D-1","D-1", date1, date2,
+                "HONDA100", "red", 2000, "KA789345");
+        vrs.addRental("D-5","D-5", date1, date2,
+                "TOYOTA100", "white", 2003, "KA789345");
+        vrs.addRental("D-5","D-5", date1, date2,
+                "TOYOTA100", "green", 2009,"KE239458");
 
-        System.out.println(vrs.toString(vrs.getBranchList()));
+        System.out.println(vrs.toString(vrs.getBranchList()) + "\n");
+        System.out.println(vrs.toString(vrs.getRentalList()) + "\n");
 
         // Print the car that is in a rental of branch 1
-        System.out.println("Car of group A and in rental of branch1 is: ");
-        for (Car car : vrs.listCar("branch1", Group.A)) {
+        System.out.println("Cars of group A and in rental of D-1 are: ");
+        for (Car car : vrs.listCar("D-1", Group.A)) {
             System.out.print(car.getRegNum());
         }
         System.out.println("\n");
@@ -346,7 +349,8 @@ public class VinaRentSystemTest {
 
         // non-existed branch number will cause error
         try {
-            vrs.listCar("branch3", Group.A);
+        	System.out.println("Try non-existed branch");
+            vrs.listCar("D-TD", Group.A);
         } catch (Exception e) {
             System.out.println(vrs.toString(vrs.getBranchList()));
         }
@@ -355,7 +359,7 @@ public class VinaRentSystemTest {
     @Test
     // 8. Record return test
     public void recordReturnTest() throws Exception {
-        System.out.println("\nTesting for recordReturn(rentalNumber, realReturnDate, realReturnBranchNo)");
+        System.out.println("8. Testing for recordReturn(rentalNumber, realReturnDate, realReturnBranchNo)");
 
         VinaRentSystem vrs = new VinaRentSystem();
 

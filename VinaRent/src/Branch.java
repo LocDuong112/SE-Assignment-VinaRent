@@ -59,18 +59,39 @@ public class Branch {
         this.neighborList = neighborList;
     }
 
-    public String toString() {
-        String result = null;
-        result = String.format("%-20s | %-30s | %-20s | %-20s", "Branch number", "Branch name", "Neighbors", "Car list");
-        result += String.format("%-20s | %-30s | ", this.branchNumber, this.name);
-        int listSize = this.carList.size();
-        if (this.neighborList.size() > listSize)
-        	listSize = this.neighborList.size();
-        
-        for (int i=0; i<listSize; i++) {
-        	
-        }
+    public String toString(String listName) {
+        String result = "";
+        result = String.format("%-20s | %-20s | ", branchNumber, name);
 
+        switch (listName) {
+            case "branch-neighbor":
+                for (Branch branch : neighborList) {
+                    result += String.format("%s, ", branch.getBranchNumber());
+                }
+                break;
+
+            case "branch-car":
+                for (Car car : carList) {
+                    result += String.format("%s, ", car.getRegNum());
+                }
+                break;
+
+            case "branch-rental":
+                for (Group group : rentalGroup.keySet()) {
+                    result += String.format("(Group %s): ", group.toString());
+                    for (Rental rental : rentalGroup.get(group)) {
+                        result += String.format("%s, ", rental.getNumber());
+                    }
+                }
+                break;
+        }
         return result;
+    }
+    
+    @Override
+    public String toString() {
+    	String result = "";
+        result = String.format("%-20s | %-30s | %n", branchNumber, name);
+    	return result;
     }
 }
