@@ -301,8 +301,10 @@ public class VinaRentSystem {
     	}
     }
 // ----------------------------- END OF ATOMIC USE CASES ------------------------------- //
-    
-    
+
+
+
+// ---------------------------- ADDITION ATOMIC USE CASES ---------------------------------- //
     // BP1. Add rental
 	public void addRental(String pickupBranch, String returnBranch, Date pickupDate, Date returnDate,
 			String modelNumber, String color, int year, String driverLicense) throws Exception {
@@ -358,6 +360,7 @@ public class VinaRentSystem {
 
 		// Add new rental to rentalGroup
 		Group group = getModel(newRental.getModelNumber()).getGroup();
+		pickupBr.getRentalList().add(newRental);
 		pickupBr.getRentalGroup().put(group, newRental);
 	}
 
@@ -366,20 +369,41 @@ public class VinaRentSystem {
     	// check if driver License exists, retrieve customer
     	Customer customer = getCustomer(driverLicense);
 
+    	// remove customer from list
+		customerList.remove(customer);
+
     	// add customer to blacklist
 		blacklist.add(customer);
 	}
+
+// --------------------- END OF ADDITION ATOMIC USE CASES ---------------------------------- //
 
 	public String toString(String listName) {
 		String result = "";
 		switch (listName) {
 			// Branch list
-			case "branch":
-				result = String.format("%-20s | %-20s | %-20s | %-20s\n",
-						"Branch Number", "BranchName", "Neighbor Branches", "Cars list");
+			case "branch-neighbor":
+				result = String.format("%-20s | %-20s | %-20s \n",
+						"Branch Number", "BranchName", "Neighbor Branches");
 				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 				for (Branch branch : branchList)
-					result += branch.toString();
+					result += branch.toString(listName);
+				break;
+
+			case "branch-car":
+				result = String.format("%-20s | %-20s | %-20s \n",
+						"Branch Number", "BranchName", "Cars list");
+				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+				for (Branch branch : branchList)
+					result += branch.toString(listName);
+				break;
+
+			case "branch-rental":
+				result = String.format("%-20s | %-20s | %-40s\n",
+						"Branch Number", "BranchName", "Rental list");
+				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+				for (Branch branch : branchList)
+					result += branch.toString(listName);
 				break;
 
 			// Model list

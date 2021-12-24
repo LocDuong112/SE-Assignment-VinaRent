@@ -51,7 +51,7 @@ public class Branch {
         this.branchNumber = branchNumber;
     }
 
-    public void setModelList(List<Car> carList) {
+    public void setCarList(List<Car> carList) {
         this.carList = carList;
     }
 
@@ -59,17 +59,31 @@ public class Branch {
         this.neighborList = neighborList;
     }
 
-    @Override
-    public String toString() {
+    public String toString(String listName) {
         String result = "";
         result = String.format("%-20s | %-20s | ", branchNumber, name);
-        for (Branch branch : neighborList) {
-            result += String.format("%s, ", branch.getBranchNumber());
-        }
 
-        result += String.format("%-20s | ","");
-        for (Car car : carList) {
-            result += String.format("%s, ", car.getRegNum());
+        switch (listName) {
+            case "branch-neighbor":
+                for (Branch branch : neighborList) {
+                    result += String.format("%s, ", branch.getBranchNumber());
+                }
+                break;
+
+            case "branch-car":
+                for (Car car : carList) {
+                    result += String.format("%s, ", car.getRegNum());
+                }
+                break;
+
+            case "branch-rental":
+                for (Group group : rentalGroup.keySet()) {
+                    result += String.format("(Group %s): ", group.toString());
+                    for (Rental rental : rentalGroup.get(group)) {
+                        result += String.format("%s, ", rental.getNumber());
+                    }
+                }
+                break;
         }
         result += "\n";
 
