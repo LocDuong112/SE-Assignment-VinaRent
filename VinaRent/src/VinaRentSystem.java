@@ -327,8 +327,10 @@ public class VinaRentSystem {
     	}
     }
 // ----------------------------- END OF ATOMIC USE CASES ------------------------------- //
-    
-    
+
+
+
+// ---------------------------- ADDITION ATOMIC USE CASES ---------------------------------- //
     // BP1. Add rental
 	public void addRental(String pickupBranch, String returnBranch, Date pickupDate, Date returnDate,
 			String modelNumber, String color, int year, String driverLicense) throws Exception {
@@ -384,6 +386,7 @@ public class VinaRentSystem {
 
 		// Add new rental to rentalGroup
 		Group group = getModel(newRental.getModelNumber()).getGroup();
+		pickupBr.getRentalList().add(newRental);
 		pickupBr.getRentalGroup().put(group, newRental);
 	}
 
@@ -391,6 +394,9 @@ public class VinaRentSystem {
 	public void addBlacklist(String driverLicense) throws Exception {
     	// check if driver License exists, retrieve customer
     	Customer customer = getCustomer(driverLicense);
+
+    	// remove customer from list
+		customerList.remove(customer);
 
     	// add customer to blacklist
 		blacklist.add(customer);
@@ -408,7 +414,7 @@ public class VinaRentSystem {
 			for (Branch branch : branchList)
 				result += branch.toString();
 			
-			result += new String(new char[endLine.length()]).replace('\0', '-');
+			result += new String(new char[endLine.length()]).replace('\0', '-');	
 		}
 		
 		else if (list.get(0) instanceof Model) {

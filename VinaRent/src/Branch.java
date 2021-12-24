@@ -51,7 +51,7 @@ public class Branch {
         this.branchNumber = branchNumber;
     }
 
-    public void setModelList(List<Car> carList) {
+    public void setCarList(List<Car> carList) {
         this.carList = carList;
     }
 
@@ -59,19 +59,17 @@ public class Branch {
         this.neighborList = neighborList;
     }
 
-    @Override
     public String toString() {
-        String result = "";
-        result = String.format("%-20s | %-30s | ", branchNumber, name);
-        for (Branch branch : neighborList) {
-            result += String.format("%s, ", branch.getBranchNumber());
+        String result = null;
+        result = String.format("%-20s | %-30s | %-20s | %-20s", "Branch number", "Branch name", "Neighbors", "Car list");
+        result += String.format("%-20s | %-30s | ", this.branchNumber, this.name);
+        int listSize = this.carList.size();
+        if (this.neighborList.size() > listSize)
+        	listSize = this.neighborList.size();
+        
+        for (int i=0; i<listSize; i++) {
+        	
         }
-
-        result += String.format("%-20s | ","");
-        for (Car car : carList) {
-            result += String.format("%s, ", car.getRegNum());
-        }
-        result += "\n";
 
         return result;
     }

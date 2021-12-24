@@ -33,7 +33,10 @@ public class VinaRentSystemTest {
     	System.out.println(new String(new char[80]).replace('\0', '/'));
     }
     
+
+// ---------------------------- ATOMIC USE CASES TEST ---------------------------------- //
     @Test
+    // 1. add a branch test
     public void addBranchTest() throws Exception {
         System.out.println("Testing for addBranch(branchNumber, name)");
 
@@ -59,6 +62,7 @@ public class VinaRentSystemTest {
     }
     
     @Test
+    // 2. make neighbor test
     public void makeNeighborTest() throws Exception {
         System.out.println("Testing for makeNeighBor(branch1, branch2)");
 
@@ -97,6 +101,65 @@ public class VinaRentSystemTest {
     }
 
     @Test
+    // 3. Add a rental group test
+    public void addRentalGroupTest() throws Exception {
+        System.out.println("\nTesting for addRentalGroup()");
+
+        VinaRentSystem vrs = new VinaRentSystem();
+
+        // add customers
+        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
+        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+
+        // add branches
+        vrs.addBranch("branch1","BranchName1");
+        vrs.addBranch("branch2","BranchName2");
+
+        // make branches become neighbor
+        vrs.makeNeighbor("branch1", "branch2");
+
+        // add models
+        vrs.addModel("model1","ModelName1",Transmission.automatic,
+                0.5f, 4, Group.A);
+        vrs.addModel("model2","ModelName2",Transmission.automatic,
+                1.2f, 2, Group.B);
+
+        // add cars
+        vrs.addCar("regNum1", "Color1", 2000,
+                "model1", "branch1");
+        vrs.addCar("regNum1.1", "Color1.1", 2002,
+                "model2", "branch1");
+        vrs.addCar("regNum2", "Color2", 2009,
+                "model2", "branch2");
+        vrs.addCar("regNum2.1", "Color2.1", 2003,
+                "model2", "branch2");
+
+        // add string days
+        String sDate1 = "31-12-2020 23:37:50";
+        String sDate2 = "12-11-1998 11:49:12";
+
+        // add date formatters
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        // add dates
+        Date date1 = formatter.parse(sDate1);
+        Date date2 = formatter.parse(sDate2);
+
+        // add rentals
+        vrs.addRental("branch1","branch2", date2, date1,
+                "model1", "Color1",2000,"license1");
+        vrs.addRental("branch1","branch1", date1, date1,
+                "model2", "Color2",2009,"license2");
+        vrs.addRental("branch2","branch1", date2, date2,
+                "model2", "Color1.1",2002,"license2");
+
+        System.out.println(vrs.toString(vrs.getBranchList()));
+
+        System.out.println("No error cases can be created!");
+    }
+
+    @Test
+    // 4. Add a model test
     public void addModelTest() throws Exception {
         System.out.println("Testing for addModel(number, name, transmission, " +
                 "consumption, numDoor, group)");
@@ -127,6 +190,7 @@ public class VinaRentSystemTest {
     }
 
     @Test
+    // 5. Add a car test
     public void addCarTest() throws Exception {
         System.out.println("Testing for addCar(regNum, color, year, " +
                 "modelNumber, branchNumber)");
@@ -190,6 +254,7 @@ public class VinaRentSystemTest {
     }
 
     @Test
+    // 6. Add a customer test
     public void addCustomerTest() throws Exception {
         System.out.println("Testing for addCustomer(name, driverLicense, email, phone)");
 
@@ -216,6 +281,142 @@ public class VinaRentSystemTest {
     }
 
     @Test
+    // 7. List cars test
+    public void listCarTest() throws Exception {
+        System.out.println("\nTesting for listCar(branchNumber, group)");
+
+        VinaRentSystem vrs = new VinaRentSystem();
+
+        // add customers
+        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
+        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+
+        // add branches
+        vrs.addBranch("branch1","BranchName1");
+        vrs.addBranch("branch2","BranchName2");
+
+        // make branches become neighbor
+        vrs.makeNeighbor("branch1", "branch2");
+
+        // add models
+        vrs.addModel("model1","ModelName1",Transmission.automatic,
+                0.5f, 4, Group.A);
+        vrs.addModel("model2","ModelName2",Transmission.automatic,
+                1.2f, 2, Group.B);
+
+        // add cars
+        vrs.addCar("regNum1", "Color1", 2000,
+                "model1", "branch1");
+        vrs.addCar("regNum1.1", "Color1.1", 2002,
+                "model2", "branch1");
+        vrs.addCar("regNum2", "Color2", 2009,
+                "model2", "branch2");
+        vrs.addCar("regNum2.1", "Color2.1", 2003,
+                "model2", "branch2");
+
+        // add string days
+        String sDate1 = "31-12-2020 23:37:50";
+        String sDate2 = "12-11-1998 11:49:12";
+
+        // add date formatters
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        // add dates
+        Date date1 = formatter.parse(sDate1);
+        Date date2 = formatter.parse(sDate2);
+
+        // add rentals
+        vrs.addRental("branch1","branch2", date2, date1,
+                "model1", "Color1",2000,"license1");
+        vrs.addRental("branch1","branch1", date1, date1,
+                "model2", "Color2",2009,"license2");
+        vrs.addRental("branch2","branch1", date2, date2,
+                "model2", "Color1.1",2002,"license2");
+
+        System.out.println(vrs.toString(vrs.getBranchList()));
+
+        // Print the car that is in a rental of branch 1
+        System.out.println("Car of group A and in rental of branch1 is: ");
+        for (Car car : vrs.listCar("branch1", Group.A)) {
+            System.out.print(car.getRegNum());
+        }
+        System.out.println("\n");
+
+        System.out.println("Print out error");
+
+        // non-existed branch number will cause error
+        try {
+            vrs.listCar("branch3", Group.A);
+        } catch (Exception e) {
+            System.out.println(vrs.toString(vrs.getBranchList()));
+        }
+    }
+
+    @Test
+    // 8. Record return test
+    public void recordReturnTest() throws Exception {
+        System.out.println("\nTesting for recordReturn(rentalNumber, realReturnDate, realReturnBranchNo)");
+
+        VinaRentSystem vrs = new VinaRentSystem();
+
+        // add customers
+        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
+
+        // add branches
+        vrs.addBranch("branch1","BranchName1");
+        vrs.addBranch("branch2","BranchName2");
+
+        // make branches become neighbor
+        vrs.makeNeighbor("branch1", "branch2");
+
+        // add models
+        vrs.addModel("model1","ModelName1",Transmission.automatic,
+                0.5f, 4, Group.A);
+
+        // add cars
+        vrs.addCar("regNum1", "Color1", 2000,
+                "model1", "branch1");
+
+        // add string days
+        String sDate1 = "31-12-2020 23:37:50";
+        String sDate2 = "12-11-1998 11:49:12";
+        String sDate3 = "12-12-2006 14:15:16";
+        String sDate4 = "27-03-2005 01:02:03";
+
+        // add date formatters
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        // add dates
+        Date date1 = formatter.parse(sDate1);
+        Date date2 = formatter.parse(sDate2);
+        Date date3 = formatter.parse(sDate3);
+        Date date4 = formatter.parse(sDate4);
+
+        // add rentals
+        vrs.addRental("branch1","branch2", date2, date1,
+                "model1", "Color1",2000,"license1");
+        String rentalNumber1 = "license1-Thu Nov 12 11:49:12 ICT 1998";
+        System.out.println(vrs.toString(vrs.getBranchList()));
+
+        vrs.recordReturn(rentalNumber1, date3, "branch2");
+        System.out.println(vrs.toString(vrs.getBranchList()));
+
+        System.out.println("Print out error");
+
+        // cannot record return for a returned rental
+        try {
+            vrs.recordReturn(rentalNumber1, date3, "branch2");
+        } catch (Exception e) {
+            System.out.println(vrs.toString(vrs.getBranchList()));
+        }
+    }
+// ---------------------------- END OF ATOMIC USE CASES TEST ---------------------------------- //
+
+
+
+// ---------------------------- ADDITION ATOMIC USE CASES TEST ---------------------------------- //
+    @Test
+    // 1. Add a rental test
     public void addRentalTest() throws Exception {
         System.out.println("Testing for addRental(pickupBranch, returnBranch, pickupDate, returnDate, " +
                 "modelNumber, color, year, driverLicense)");
@@ -275,7 +476,7 @@ public class VinaRentSystemTest {
         // pickupDate and returnDate.
         // 1 customer can have many rentals.
         // System can find a car in neighbor branches of pickupBranch (the car here is in branch2).
-        vrs.addRental("branch1","branch1", date2, date2,
+        vrs.addRental("branch1","branch1", date1, date1,
                 "model2", "Color2",2009,"license1");
 
         System.out.println(vrs.toString(vrs.getRentalList()));
@@ -330,6 +531,33 @@ public class VinaRentSystemTest {
             System.out.println(vrs.toString(vrs.getRentalList()));
         }
     }
-    
-    
+
+    @Test
+    // 2. Add a customer to blacklist test
+    public void addBlacklistTest() throws Exception {
+        System.out.println("\nTesting for addBlacklist(driverLicense)");
+
+        VinaRentSystem vrs = new VinaRentSystem();
+
+        // add normal customers
+        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
+        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+
+        System.out.println(vrs.toString(vrs.getCustomerList()));
+
+        // Blacklisted customer 1
+        vrs.addBlacklist("license1");
+        System.out.println(vrs.toString(vrs.getCustomerList()));
+
+        System.out.println("Print out error");
+
+        // cannot blacklisted a customer with the non-existed driver license
+        try {
+            vrs.addBlacklist("license3");
+        } catch (Exception e) {
+            System.out.println(vrs.toString(vrs.getCustomerList()));
+        }
+    }
+
+// ------------------------ END OF ADDITION ATOMIC USE CASES TEST --------------------------------- //
 }
