@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -136,6 +137,31 @@ public class VinaRentSystem {
 	}
 
 // ------------------------------ END OF PRIVATE METHODS ------------------------------- //
+	
+	
+	
+// ------------------------------------- GETTERS --------------------------------------- //
+	public List<Branch> getBranchList() {
+		return branchList;
+	}
+	
+	public List<Car> getCarList() {
+		return carList;
+	}
+	
+	public List<Customer> getCustomerList() {
+		return customerList;
+	}
+	
+	public List<Model> getModelList() {
+		return modelList;
+	}
+	
+	public List<Rental> getRentalList() {
+		return rentalList;
+	}
+	
+// --------------------------------- END OF GETTERS ------------------------------------ //
     
     
     
@@ -370,61 +396,74 @@ public class VinaRentSystem {
 		blacklist.add(customer);
 	}
 
-	public String toString(String listName) {
-		String result = "";
-		switch (listName) {
-			// Branch list
-			case "branch":
-				result = String.format("%-20s | %-20s | %-20s | %-20s\n",
-						"Branch Number", "BranchName", "Neighbor Branches", "Cars list");
-				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
-				for (Branch branch : branchList)
-					result += branch.toString();
-				break;
-
-			// Model list
-			case "model":
-				result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
-						"Model Number", "Model Name", "Transmission",
-						"Fuel Consumption", "Number of door", "Group", "Cars list");
-				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
-				for (Model model : modelList)
-					result += model.toString();
-				break;
-
-			// Car list
-			case "car":
-				result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s\n",
-						"Registration Number", "Color", "Year",
-						"Model Number", "Branch Number");
-				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
-				for (Car car : carList) {
-					result += car.toString();
-				}
-				break;
-
-			// Customer list
-			case "customer":
-				result = String.format("%-20s | %-20s | %-20s | %-20s\n",
-						"Name", "Drive License", "Email", "Phone Number");
-				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
-				for (Customer customer : customerList) {
-					result += customer.toString();
-				}
-				break;
-
-			// Rental list
-			case "rental":
-				result = String.format("%-40s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-40s | %-40s\n",
-						"Number", "Status", "Customers' Name", "Drive License",
-						"Model Number", "Registration Number", "Pickup Branch", "Return Branch",
-						"Pickup Date", "Return Date");
-				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
-				for (Rental rental : rentalList) {
-					result += rental.toString();
-				}
-				break;
+	public String toString(List<?> list) {
+		String result = null;
+		
+		if (list.get(0) instanceof Branch) {
+			result = String.format("%-20s | %-30s | %-20s | %-20s\n",
+					"Branch Number", "BranchName", "Neighbor Branches", "Cars list");
+			String endLine = result;
+			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+			
+			for (Branch branch : branchList)
+				result += branch.toString();
+			
+			result += new String(new char[endLine.length()]).replace('\0', '-');
 		}
+		
+		else if (list.get(0) instanceof Model) {
+			result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
+					"Model Number", "Model Name", "Transmission",
+					"Fuel Consumption", "Number of door", "Group", "Cars list");
+			String endLine = result;
+			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+			
+			for (Model model : modelList)
+				result += model.toString();
+			
+			result += new String(new char[endLine.length()]).replace('\0', '-');
+		}
+		
+		else if (list.get(0) instanceof Car) {
+			result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s\n",
+					"Registration Number", "Color", "Year",
+					"Model Number", "Branch Number");
+			String endLine = result;
+			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+			
+			for (Car car : carList)
+				result += car.toString();
+			
+			result += new String(new char[endLine.length()]).replace('\0', '-');
+		}
+		
+		else if (list.get(0) instanceof Customer) {
+			result = String.format("%-20s | %-20s | %-20s | %-20s\n",
+					"Name", "Drive License", "Email", "Phone Number");
+			String endLine = result;
+			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+			
+			for (Customer customer : customerList)
+				result += customer.toString();
+			
+			result += new String(new char[endLine.length()]).replace('\0', '-');
+		}
+		
+		else if (list.get(0) instanceof Rental) {
+			result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
+					"Number", "Status", "Customers' Name", "Customers' Drive License",
+					"Model Number", "Car's Registration Number", "Pickup Branch", "Return Branch",
+					"Pickup Date", "Return Date");
+			String endLine = result;
+			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
+			
+			
+			for (Rental rental : rentalList)
+				result += rental.toString();
+			
+			result += new String(new char[endLine.length()]).replace('\0', '-');
+		}
+		
 		return result;
 	}
 }
