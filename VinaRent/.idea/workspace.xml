@@ -27,8 +27,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8bb82ada-6b36-4287-b35b-644864ace9c1" name="Default Changelist" comment="Update rental number to static">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/VinaRent/Branch.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/VinaRent/Branch.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/VinaRent/VinaRentSystem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/VinaRent/VinaRentSystem.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/VinaRent/VinaRentSystemTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/VinaRent/VinaRentSystemTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Branch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Branch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Car.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VinaRentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VinaRentSystem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VinaRentSystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VinaRentSystemTest.java" afterDir="false" />
     </list>
@@ -68,7 +70,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Lab7/Q2" />
   </component>
-  <component name="RunManager" selected="JUnit.VinaRentSystemTest">
+  <component name="RunManager" selected="JUnit.VinaRentSystemTest.carMaintenanceTest">
     <configuration name="VinaRentSystemTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="VinaRent" />
       <option name="PACKAGE_NAME" value="" />
@@ -88,21 +90,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VinaRentSystemTest.addCarTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="VinaRent" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="VinaRentSystemTest" />
-      <option name="METHOD_NAME" value="addCarTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="VinaRentSystemTest.addRentalGroupTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="VinaRent" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="VinaRentSystemTest" />
       <option name="METHOD_NAME" value="addRentalGroupTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VinaRentSystemTest.carMaintenanceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="VinaRent" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="VinaRentSystemTest" />
+      <option name="METHOD_NAME" value="carMaintenanceTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -120,11 +122,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.VinaRentSystemTest.carMaintenanceTest" />
         <item itemvalue="JUnit.VinaRentSystemTest" />
         <item itemvalue="JUnit.VinaRentSystemTest.addBlacklistTest" />
         <item itemvalue="JUnit.VinaRentSystemTest.addRentalGroupTest" />
         <item itemvalue="JUnit.VinaRentSystemTest.makeNeighborTest" />
-        <item itemvalue="JUnit.VinaRentSystemTest.addCarTest" />
       </list>
     </recent_temporary>
   </component>
@@ -222,22 +224,22 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="463" y="138" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1640247144365" />
-    <state width="1322" height="242" key="GridCell.Tab.0.bottom" timestamp="1640326764892">
+    <state width="1322" height="242" key="GridCell.Tab.0.bottom" timestamp="1640353619621">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1322" height="242" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1640326764892" />
-    <state width="1322" height="242" key="GridCell.Tab.0.center" timestamp="1640326764892">
+    <state width="1322" height="242" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1640353619621" />
+    <state width="1322" height="242" key="GridCell.Tab.0.center" timestamp="1640353619621">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1322" height="242" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1640326764892" />
-    <state width="1322" height="242" key="GridCell.Tab.0.left" timestamp="1640326764892">
+    <state width="1322" height="242" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1640353619621" />
+    <state width="1322" height="242" key="GridCell.Tab.0.left" timestamp="1640353619621">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1322" height="242" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1640326764892" />
-    <state width="1322" height="242" key="GridCell.Tab.0.right" timestamp="1640326764892">
+    <state width="1322" height="242" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1640353619621" />
+    <state width="1322" height="242" key="GridCell.Tab.0.right" timestamp="1640353619621">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1322" height="242" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1640326764892" />
+    <state width="1322" height="242" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1640353619621" />
     <state x="275" y="112" key="Vcs.Push.Dialog.v2" timestamp="1640177257551">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

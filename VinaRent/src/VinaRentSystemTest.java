@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.AfterClass;
+//import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
+//import org.junit.jupiter.api.AfterEach;
 import org.junit.rules.Timeout;
 
 public class VinaRentSystemTest {
@@ -562,6 +562,98 @@ public class VinaRentSystemTest {
             System.out.println(vrs.toString(vrs.getCustomerList()));
         }
     }
+
+    @Test
+    // 3. Update status of a car after being returned test
+    public void carMaintenanceTest() throws Exception {
+        System.out.println("5. Testing for carMaintenance(regNum, status)");
+
+        VinaRentSystem vrs = new VinaRentSystem();
+
+        // add customers
+        vrs.addCustomer("Karen", "KA789345", "karen@something.com", "098762345");
+        vrs.addCustomer("Kevin", "KE239458", "kevin@something.com", "092385762");
+
+        // add branches
+        vrs.addBranch("D-5"		,	"Dist. 5 Branch");
+        vrs.addBranch("D-TD"	,	"Thu Duc Dist. Branch");
+
+        // add models
+        vrs.addModel("HONDA100","Honda Civic",Transmission.automatic,
+                0.5f, 4, Group.A);
+        vrs.addModel("TOYOTA111","Toyota Tundra",Transmission.automatic,
+                1.2f, 2, Group.B);
+
+        // add normal cars
+        vrs.addCar("ASDF-1234", "red", 2000,
+                "HONDA100", "D-5");
+        vrs.addCar("QWERTY-2345", "blue", 2009,
+                "TOYOTA111", "D-TD");
+        vrs.addCar("ZXCV-7890", "white", 2010,
+                "TOYOTA111", "D-TD");
+
+        // add string days
+        String sDate1 = "31-12-2020 23:37:50";
+        String sDate2 = "26-06-1998 11:49:12";
+        String sDate3 = "26-06-2021 12:13:14";
+
+        // add date formatters
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        // add dates
+        Date date1 = formatter.parse(sDate1);
+        Date date2 = formatter.parse(sDate2);
+        Date date3 = formatter.parse(sDate3);
+
+        // add rentals
+        vrs.addRental("D-5","D-5", date2, date1,
+                "HONDA100", "red",2000,"KA789345");
+        String rentalNumber1 = "KA789345-Fri Jun 26 11:49:12 ICT 1998";
+
+        vrs.addRental("D-TD","D-5", date1, date1,
+                "TOYOTA111", "blue",2009,"KE239458");
+        String rentalNumber2 = "KE239458-Thu Dec 31 23:37:50 ICT 2020";
+
+        // record return of rental "KA789345-Fri Jun 26 11:49:12 ICT 1998"
+        vrs.recordReturn(rentalNumber1, date3, "D-5");
+        vrs.recordReturn(rentalNumber2, date3, "D-5");
+        System.out.println(vrs.toString(vrs.getCarList()) + "\n");
+
+        // set status of the RETURNED car to SERVICE_NEEDED
+        vrs.carMaintenance("ASDF-1234", Status.SERVICE_NEEDED);
+        System.out.println(vrs.toString(vrs.getCarList()) + "\n");
+
+        // set status of the SERVICE_NEEDED car to READY
+        vrs.carMaintenance("ASDF-1234", Status.READY);
+        System.out.println(vrs.toString(vrs.getCarList()) + "\n");
+
+        System.out.println("Print out error");
+
+        // cannot maintain with the unavailable regNum
+        try {
+            System.out.println("Try to maintain car with non-existed registration number (QWERTY-123)");
+            vrs.carMaintenance("QWERTY-123", Status.READY);
+        } catch (Exception e) {
+            System.out.println(vrs.toString(vrs.getCarList()) + "\n");
+        }
+
+        // cannot maintain the car whose status is neither RETURNED or SERVICE_NEEDED
+        try {
+            System.out.println("Try to maintain car whose status is neither RETURNED or SERVICE_NEEDED (ZXCV-7890)");
+            vrs.carMaintenance("ZXCV-7890", Status.READY);
+        } catch (Exception e) {
+            System.out.println(vrs.toString(vrs.getCarList()) + "\n");
+        }
+
+        // cannot maintain a car with a wrong input status (neither READY or SERVICE_NEEDED or REMOVED)
+        try {
+            System.out.println("Try to maintain a car with a wrong input status (neither READY or SERVICE_NEEDED or REMOVED)");
+            vrs.carMaintenance("QWERTY-2345", Status.HELD);
+        } catch (Exception e) {
+            System.out.println(vrs.toString(vrs.getCarList()));
+        }
+    }
+
 
 // ------------------------ END OF ADDITION ATOMIC USE CASES TEST --------------------------------- //
 }

@@ -83,7 +83,7 @@ public class VinaRentSystem {
 				return car;
 		}
     	
-    	String msg = "Error: No rental found!";
+    	String msg = "Error: No registration number found!";
 		System.out.println(msg);
 		throw new Exception(msg);
     }
@@ -402,6 +402,35 @@ public class VinaRentSystem {
 		blacklist.add(customer);
 	}
 
+	public void carMaintenance(String regNum, Status status) throws Exception {
+		// check if the car exists
+		Car car = getCar(regNum);
+
+		// check if the car's status is neither RETURNED or SERVICE_NEEDED
+		if ((car.getStatus() != Status.RETURNED) && (car.getStatus() != Status.SERVICE_NEEDED)) {
+			String msg = "Error: The car is neither RETURNED or SERVICE_NEEDED";
+			System.out.println(msg);
+			throw new Exception(msg);
+		}
+
+		// check if the input status is READY, SERVICE_NEEDED or REMOVED
+		if ((status != Status.READY) && (status != Status.SERVICE_NEEDED) && (status != Status.REMOVED)) {
+			String msg = "Error: The input status must be READY or SERVICE_NEEDED or REMOVED";
+			System.out.println(msg);
+			throw new Exception(msg);
+		}
+
+		// set the status of the car
+		car.setStatus(status);
+
+		// if status is REMOVED then delete car in carList, modelCarList, branchCarList
+		if (status == Status.REMOVED) {
+			carList.remove(car);
+			getModel(car.getModelNumber()).getCarList().remove(car);
+			getBranch(car.getBranchNumber()).getCarList().remove(car);
+		}
+	}
+
 	public String toString(List<?> list) {
 		String result = null;
 		
@@ -431,9 +460,9 @@ public class VinaRentSystem {
 		}
 		
 		else if (list.get(0) instanceof Car) {
-			result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s\n",
+			result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
 					"Registration Number", "Color", "Year",
-					"Model Number", "Branch Number");
+					"Model Number", "Branch Number", "Status");
 			String endLine = result;
 			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 			
