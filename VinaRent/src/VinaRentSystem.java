@@ -313,11 +313,21 @@ public class VinaRentSystem {
 		// check if returnBranch exists
 		getBranch(returnBranch);
 
+		// check if returnDate is bigger than pickupDate
+		if (returnDate.compareTo(pickupDate) < 0) {
+			String msg = "Error: Return date must be after pickup date!";
+			System.out.println(msg);
+			throw new Exception(msg);
+		}
+
 		// check if driverLicense exists, if not, then ask info and create a new customer
 		try {
 			getCustomer(driverLicense);
 		} catch (Exception e) {
+			String msg = "New customer!";
+			System.out.println(msg);
 			addCustomer(null, driverLicense, null, null);
+			throw new Exception(msg);
 		}
 
 		// Check if customer is in Blacklist
@@ -349,6 +359,15 @@ public class VinaRentSystem {
 		// Add new rental to rentalGroup
 		Group group = getModel(newRental.getModelNumber()).getGroup();
 		pickupBr.getRentalGroup().put(group, newRental);
+	}
+
+	// Add a customer to blacklist
+	public void addBlacklist(String driverLicense) throws Exception {
+    	// check if driver License exists, retrieve customer
+    	Customer customer = getCustomer(driverLicense);
+
+    	// add customer to blacklist
+		blacklist.add(customer);
 	}
 
 	public String toString(String listName) {
@@ -396,9 +415,9 @@ public class VinaRentSystem {
 
 			// Rental list
 			case "rental":
-				result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
-						"Number", "Status", "Customers' Name", "Customers' Drive License",
-						"Model Number", "Car's Registration Number", "Pickup Branch", "Return Branch",
+				result = String.format("%-40s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-40s | %-40s\n",
+						"Number", "Status", "Customers' Name", "Drive License",
+						"Model Number", "Registration Number", "Pickup Branch", "Return Branch",
 						"Pickup Date", "Return Date");
 				result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 				for (Rental rental : rentalList) {

@@ -1,4 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.BeforeClass;
@@ -201,10 +203,19 @@ public class VinaRentSystemTest {
         // add customers
         vrs.addCustomer("Customer1", "license1", "email1", "phone1");
         vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+        vrs.addCustomer("Customer3", "license3", "email3", "phone3");
+
+        // add customer 3 to blacklist
+        vrs.addBlacklist("license3");
 
         // add branches
         vrs.addBranch("branch1","BranchName1");
         vrs.addBranch("branch2","BranchName2");
+        vrs.addBranch("branch3","BranchName3");
+
+        // make branches become neighbor
+        vrs.makeNeighbor("branch1", "branch2");
+        vrs.makeNeighbor("branch1", "branch3");
 
         // add models
         vrs.addModel("model1","ModelName1",Transmission.automatic,
@@ -215,9 +226,86 @@ public class VinaRentSystemTest {
         // add cars
         vrs.addCar("regNum1", "Color1", 2000,
                 "model1", "branch1");
-        vrs.addCar("regNum2", "Color2", 2009,
+
+        vrs.addCar("regNum1.1", "Color1.1", 2002,
                 "model2", "branch1");
+        vrs.addCar("regNum2", "Color2", 2009,
+                "model2", "branch2");
+        vrs.addCar("regNum2.1", "Color2.1", 2003,
+                "model2", "branch3");
+
+        // add string days
+        String sDate1 = "31-12-2020 23:37:50";
+        String sDate2 = "12-11-1998 11:49:12";
+
+        // add date formatters
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        // add dates
+        Date date1 = formatter.parse(sDate1);
+        Date date2 = formatter.parse(sDate2);
 
         // add rentals
+        vrs.addRental("branch1","branch2", date2, date1,
+                "model1", "Color1",2000,"license1");
+
+        // can add a rental with the same pickupBranch, returnBranch or the same
+        // pickupDate and returnDate.
+        // 1 customer can have many rentals.
+        // System can find a car in neighbor branches of pickupBranch (the car here is in branch2).
+        vrs.addRental("branch1","branch1", date2, date2,
+                "model2", "Color2",2009,"license1");
+
+        System.out.println(vrs.toString("rental"));
+
+        System.out.println("Print out error");
+
+        // cannot add a rental with the non-existed branch
+        try {
+            vrs.addRental("branch4","branch1", date2, date2,
+                    "model2", "Color2.1",2003,"license1");
+        } catch (Exception e) {
+            System.out.println(vrs.toString("rental"));
+        }
+
+        // cannot add a rental with returnDate before pickupDate
+        try {
+            vrs.addRental("branch1","branch1", date1, date2,
+                    "model2", "Color2.1",2003,"license1");
+        } catch (Exception e) {
+            System.out.println(vrs.toString("rental"));
+        }
+
+        // cannot add a rental with new customer, ask info of new customer
+        try {
+            vrs.addRental("branch1","branch1", date2, date2,
+                    "model2", "Color2.1",2003,"license4");
+        } catch (Exception e) {
+            System.out.println(vrs.toString("rental"));
+        }
+
+        // cannot add a rental with a blacklisted customer
+        try {
+            vrs.addRental("branch1","branch1", date2, date2,
+                    "model2", "Color2.1",2003,"license3");
+        } catch (Exception e) {
+            System.out.println(vrs.toString("rental"));
+        }
+
+        // cannot add a rental with a non-existed model
+        try {
+            vrs.addRental("branch1","branch1", date2, date2,
+                    "model3", "Color2.1",2003,"license1");
+        } catch (Exception e) {
+            System.out.println(vrs.toString("rental"));
+        }
+
+        // cannot add a rental with a non-existed car
+        try {
+            vrs.addRental("branch1","branch1", date2, date2,
+                    "model2", "Color2.1",2009,"license1");
+        } catch (Exception e) {
+            System.out.println(vrs.toString("rental"));
+        }
     }
 }

@@ -92,7 +92,7 @@ public class Rental {
     @Override
     public String toString() {
         String result = "";
-        result = String.format("%-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
+        result = String.format("%-40s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-40s | %-40s\n",
                 number, status.toString(), customer.getName(), customer.getDriveLicense(), modelNumber, car.getRegNum(),
                 pickupBranch, returnBranch,
                 pickupDate, returnDate);
