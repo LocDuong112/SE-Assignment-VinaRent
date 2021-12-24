@@ -258,6 +258,137 @@ public class VinaRentSystemTest {
         }
     }
 
+    @Test
+    // 7. List cars test
+    public void listCarTest() throws Exception {
+        System.out.println("\nTesting for listCar(branchNumber, group)");
+
+        VinaRentSystem vrs = new VinaRentSystem();
+
+        // add customers
+        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
+        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+
+        // add branches
+        vrs.addBranch("branch1","BranchName1");
+        vrs.addBranch("branch2","BranchName2");
+
+        // make branches become neighbor
+        vrs.makeNeighbor("branch1", "branch2");
+
+        // add models
+        vrs.addModel("model1","ModelName1",Transmission.automatic,
+                0.5f, 4, Group.A);
+        vrs.addModel("model2","ModelName2",Transmission.automatic,
+                1.2f, 2, Group.B);
+
+        // add cars
+        vrs.addCar("regNum1", "Color1", 2000,
+                "model1", "branch1");
+        vrs.addCar("regNum1.1", "Color1.1", 2002,
+                "model2", "branch1");
+        vrs.addCar("regNum2", "Color2", 2009,
+                "model2", "branch2");
+        vrs.addCar("regNum2.1", "Color2.1", 2003,
+                "model2", "branch2");
+
+        // add string days
+        String sDate1 = "31-12-2020 23:37:50";
+        String sDate2 = "12-11-1998 11:49:12";
+
+        // add date formatters
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        // add dates
+        Date date1 = formatter.parse(sDate1);
+        Date date2 = formatter.parse(sDate2);
+
+        // add rentals
+        vrs.addRental("branch1","branch2", date2, date1,
+                "model1", "Color1",2000,"license1");
+        vrs.addRental("branch1","branch1", date1, date1,
+                "model2", "Color2",2009,"license2");
+        vrs.addRental("branch2","branch1", date2, date2,
+                "model2", "Color1.1",2002,"license2");
+
+        System.out.println(vrs.toString("branch-rental"));
+        System.out.println(vrs.toString("branch-car"));
+
+        // Print the car that is in a rental of branch 1
+        System.out.println("Car of group A and in rental of branch1 is: ");
+        for (Car car : vrs.listCar("branch1", Group.A)) {
+            System.out.print(car.getRegNum());
+        }
+        System.out.println("\n");
+
+        System.out.println("Print out error");
+
+        // non-existed branch number will cause error
+        try {
+            vrs.listCar("branch3", Group.A);
+        } catch (Exception e) {
+            System.out.println(vrs.toString("branch-rental"));
+        }
+    }
+
+    @Test
+    // 8. Record return test
+    public void recordReturnTest() throws Exception {
+        System.out.println("\nTesting for recordReturn(rentalNumber, realReturnDate, realReturnBranchNo)");
+
+        VinaRentSystem vrs = new VinaRentSystem();
+
+        // add customers
+        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
+
+        // add branches
+        vrs.addBranch("branch1","BranchName1");
+        vrs.addBranch("branch2","BranchName2");
+
+        // make branches become neighbor
+        vrs.makeNeighbor("branch1", "branch2");
+
+        // add models
+        vrs.addModel("model1","ModelName1",Transmission.automatic,
+                0.5f, 4, Group.A);
+
+        // add cars
+        vrs.addCar("regNum1", "Color1", 2000,
+                "model1", "branch1");
+
+        // add string days
+        String sDate1 = "31-12-2020 23:37:50";
+        String sDate2 = "12-11-1998 11:49:12";
+        String sDate3 = "12-12-2006 14:15:16";
+        String sDate4 = "27-03-2005 01:02:03";
+
+        // add date formatters
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+
+        // add dates
+        Date date1 = formatter.parse(sDate1);
+        Date date2 = formatter.parse(sDate2);
+        Date date3 = formatter.parse(sDate3);
+        Date date4 = formatter.parse(sDate4);
+
+        // add rentals
+        vrs.addRental("branch1","branch2", date2, date1,
+                "model1", "Color1",2000,"license1");
+        String rentalNumber1 = "license1-Thu Nov 12 11:49:12 ICT 1998";
+        System.out.println(vrs.toString("branch-rental"));
+
+        vrs.recordReturn(rentalNumber1, date3, "branch2");
+        System.out.println(vrs.toString("branch-rental"));
+
+        System.out.println("Print out error");
+
+        // cannot record return for a returned rental
+        try {
+            vrs.recordReturn(rentalNumber1, date3, "branch2");
+        } catch (Exception e) {
+            System.out.println(vrs.toString("branch-rental"));
+        }
+    }
 // ---------------------------- END OF ATOMIC USE CASES TEST ---------------------------------- //
 
 
@@ -408,5 +539,5 @@ public class VinaRentSystemTest {
     }
 
 // ------------------------ END OF ADDITION ATOMIC USE CASES TEST --------------------------------- //
-    
+
 }

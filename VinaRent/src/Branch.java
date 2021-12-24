@@ -80,7 +80,7 @@ public class Branch {
                 for (Group group : rentalGroup.keySet()) {
                     result += String.format("(Group %s): ", group.toString());
                     for (Rental rental : rentalGroup.get(group)) {
-                        result += String.format("%s, ", rental.getNumber());
+                        result += String.format("%s (Status: %s), ", rental.getNumber(), rental.getStatus().toString());
                     }
                 }
                 break;
