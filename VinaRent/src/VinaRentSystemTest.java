@@ -167,9 +167,13 @@ public class VinaRentSystemTest {
         vrs.addRental("D-1","D-1", date1, date2,
                 "HONDA100", "blue",2009,"KE13095");
 
-//        System.out.println(vrs.toString(vrs.getRentalList()));
+        // Print out rental list of each branch
+        System.out.println("Rental list of each branch");
         for (Branch b : vrs.getBranchList())
         	System.out.println(b.toString(b.getRentalList()));
+
+        // Print out rental group of each branch
+        System.out.println("Rental group of each branch");
         Iterator<Branch> itr = vrs.getBranchList().iterator();
         while (itr.hasNext()) {
 			Branch branch = (Branch) itr.next();
@@ -539,11 +543,11 @@ public class VinaRentSystemTest {
 
         // cannot add a rental with new customer, ask info of new customer
         try {
-            System.out.println("\nCannot add a rental with new customer (GR345259), need to ask information of the new customer");
+            System.out.println("\nNeed more info to add a rental with a new customer (GR345259)");
             vrs.addRental("D-1","D-1", date2, date2,
                     "TOYOTA100", "blue",2009,"GR345259");
         } catch (Exception e) {
-        	System.out.println("Rental list after the failed test");
+        	System.out.println("Customer list after the failed test");
             System.out.println(vrs.toString(vrs.getCustomerList()));
         }
 
@@ -553,7 +557,7 @@ public class VinaRentSystemTest {
             vrs.addRental("D-1","D-1", date2, date2,
                     "TOYOTA100", "blue",2009,"KA235436");
         } catch (Exception e) {
-        	System.out.println("Rental list after the failed test");
+        	System.out.println("Customer list after the failed test");
             System.out.println(vrs.toString(vrs.getCustomerList()));
         }
 
@@ -563,7 +567,7 @@ public class VinaRentSystemTest {
             vrs.addRental("D-5","D-5", date2, date2,
                     "VINFAST100", "red",2003,"KE346236");
         } catch (Exception e) {
-        	System.out.println("Rental list after the failed test");
+        	System.out.println("The model list after the failed test");
             System.out.println(vrs.toString(vrs.getModelList()));
         }
 
@@ -575,7 +579,7 @@ public class VinaRentSystemTest {
         } catch (Exception e) {
         	System.out.println("The car list after the failed test");
             System.out.println(vrs.toString(vrs.getCarList()));
-            System.out.println("The rental list in total");
+            System.out.println("The rental list after having encountering with errors");
             System.out.println(vrs.toString(vrs.getRentalList()));
         }
     }

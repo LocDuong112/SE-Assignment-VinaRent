@@ -83,8 +83,12 @@ public class Branch {
     	}
     	else if (list.get(0) instanceof Rental) {
     		result += String.format("List of rentals of %s (%s)%n", name, branchNumber);
+			result += String.format("%-40s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s | %-40s | %-40s%n",
+					"Rental number", "Status", "Customers' Name", "Driver license",
+					"Model Number", "Registration Number", "Pickup Branch", "Return Branch",
+					"Pickup Date", "Return Date");
 			result += new String(new char[result.length()]).replace('\0', '-') + String.format("%n", null);
-    		for (Object b : list) {
+			for (Object b : list) {
     			result += String.format("%s", ((Rental)b).toString());
     		}
     	}
