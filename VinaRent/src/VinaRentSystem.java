@@ -170,7 +170,7 @@ public class VinaRentSystem {
         // check if the branchNumber is duplicated
         for (Branch branch : branchList) {
             if (branch.getBranchNumber() == branchNumber) {
-                String errMess = "Branch number is already assigned. Please replace with a new branch number.\n";
+                String errMess = "Error: Branch number is already assigned. Please replace with a new branch number.\n";
                 System.out.println(errMess);
                 throw new Exception(errMess);
             }
@@ -227,7 +227,7 @@ public class VinaRentSystem {
         // check if modelNumber exists
         for (Model model: modelList) {
             if (model.getNumber() == number) {
-                String errMess = "Model number is already exists. Please try another model number.\n";
+                String errMess = "Error: Model number is already exists. Please try another model number.\n";
                 System.out.println(errMess);
                 throw new Exception(errMess);
             }
@@ -244,7 +244,7 @@ public class VinaRentSystem {
         // check regNum
         for (Car car: carList) {
             if (car.getRegNum()==regNum) {
-                String errMess = "Registration number is already exists. Please try another registration number.\n";
+                String errMess = "Error: Registration number is already exists. Please try another registration number.\n";
                 System.out.println(errMess);
                 throw new Exception(errMess);
             }
@@ -347,21 +347,22 @@ public class VinaRentSystem {
 			throw new Exception(msg);
 		}
 
+		// Check if customer is in Blacklist
+		for (Customer customer : blacklist) {
+			if (customer.getDriveLicense() == driverLicense) {
+				String msg = "Error: Customer is in BLACKLIST!";
+				System.out.println(msg);
+				throw new Exception(msg);
+			}
+		}
+
 		// check if driverLicense exists, if not, then ask info and create a new customer
 		try {
 			getCustomer(driverLicense);
 		} catch (Exception e) {
-			String msg = "New customer!";
+			String msg = "Warning: New customer!";
 			System.out.println(msg);
 			addCustomer(null, driverLicense, null, null);
-			throw new Exception(msg);
-		}
-
-		// Check if customer is in Blacklist
-		Customer customer = getCustomer(driverLicense);
-		if (blacklist.contains(customer)) {
-			String msg = "The customer is in BLACKLIST";
-			System.out.println(msg);
 			throw new Exception(msg);
 		}
 
@@ -378,6 +379,9 @@ public class VinaRentSystem {
 
 		// set status of the car to RESERVED
 		car.setStatus(Status.RESERVED);
+
+		// retrieve customer
+		Customer customer = getCustomer(driverLicense);
 
 		// Create and add a new rental to rentalList
 		Rental newRental = new Rental(customer, pickupBranch, returnBranch, pickupDate, returnDate, modelNumber, car);

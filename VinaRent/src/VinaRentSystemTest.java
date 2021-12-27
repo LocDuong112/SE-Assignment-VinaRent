@@ -1,3 +1,4 @@
+import java.awt.desktop.ScreenSleepEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -39,6 +40,7 @@ public class VinaRentSystemTest {
         VinaRentSystem vrs = new VinaRentSystem();
 
         // add 2 normal branch
+        System.out.println("Normal cases");
         vrs.addBranch("D-1"		,	"District 1 Branch");
         vrs.addBranch("D-TD-1"	,	"Thu Duc District Branch");
 
@@ -71,6 +73,7 @@ public class VinaRentSystemTest {
         vrs.addBranch("D-TD"	,	"Thu Duc Dist. Branch");
 
         // make branch D-1 & D-5 become neighbor
+        System.out.println("Normal case: Try to make D-1 and D-TD becomes neighbor.");
         vrs.makeNeighbor("D-1", "D-5");
 
         // 1 branch can have many neighbors
@@ -150,7 +153,7 @@ public class VinaRentSystemTest {
         vrs.addRental("branch2","branch1", date2, date2,
                 "model2", "Color1.1",2002,"license2");
 
-        System.out.println(vrs.toString(vrs.getBranchList()));
+        System.out.println(vrs.toString(vrs.getRentalList()));
 
         System.out.println("No error cases can be created!");
     }
@@ -164,6 +167,7 @@ public class VinaRentSystemTest {
         VinaRentSystem vrs = new VinaRentSystem();
 
         // add normal models
+        System.out.println("Normal case: add normal models");
         vrs.addModel("HONDA100","Honda Civic",Transmission.automatic,
                 0.5f, 4, Group.A);
         vrs.addModel("TOYOTA100","Toyota Camry",Transmission.automatic,
@@ -194,6 +198,8 @@ public class VinaRentSystemTest {
                 "modelNumber, branchNumber)");
 
         VinaRentSystem vrs = new VinaRentSystem();
+
+        System.out.println("Normal case: add cars of specified models to specified branches");
 
         // add branches
         vrs.addBranch("D-5"		,	"Dist. 5 Branch");
@@ -259,6 +265,7 @@ public class VinaRentSystemTest {
         VinaRentSystem vrs = new VinaRentSystem();
 
         // add normal customers
+        System.out.println("Normal cases");
         vrs.addCustomer("Kevin", "KE09124", "kevin@something.com", "09696969");
         vrs.addCustomer("Karen", "KA19386", "karen@something.com", "09420420");
 
@@ -284,6 +291,8 @@ public class VinaRentSystemTest {
         System.out.println("7. Testing for listCar(branchNumber, group)");
 
         VinaRentSystem vrs = new VinaRentSystem();
+
+        System.out.println("Normal case: list all the rented cars of a specified group of a specified branch");
 
         // add customers
         vrs.addCustomer("Karen", "KA789345", "karen@something.com", "098762345");
@@ -359,6 +368,8 @@ public class VinaRentSystemTest {
 
         VinaRentSystem vrs = new VinaRentSystem();
 
+        System.out.println("Normal case: Record the returning of a rental");
+
         // add customers
         vrs.addCustomer("Customer1", "license1", "email1", "phone1");
 
@@ -396,18 +407,21 @@ public class VinaRentSystemTest {
         vrs.addRental("branch1","branch2", date2, date1,
                 "model1", "Color1",2000,"license1");
         String rentalNumber1 = "license1-Thu Nov 12 11:49:12 ICT 1998";
-        System.out.println(vrs.toString(vrs.getBranchList()));
+        System.out.println(vrs.toString(vrs.getRentalList()));
+
+        System.out.println("\n");
 
         vrs.recordReturn(rentalNumber1, date3, "branch2");
-        System.out.println(vrs.toString(vrs.getBranchList()));
+        System.out.println(vrs.toString(vrs.getRentalList()));
 
-        System.out.println("Print out error");
+        System.out.println("\nPrint out error");
 
         // cannot record return for a returned rental
         try {
+            System.out.println("Trying to record the returning of a returned rental (rental: \"license1-Thu Nov 12 11:49:12 ICT 1998\")");
             vrs.recordReturn(rentalNumber1, date3, "branch2");
         } catch (Exception e) {
-            System.out.println(vrs.toString(vrs.getBranchList()));
+            System.out.println(vrs.toString(vrs.getRentalList()));
         }
     }
 // ---------------------------- END OF ATOMIC USE CASES TEST ---------------------------------- //
@@ -418,10 +432,12 @@ public class VinaRentSystemTest {
     @Test
     // 1. Add a rental test
     public void addRentalTest() throws Exception {
-        System.out.println("Testing for addRental(pickupBranch, returnBranch, pickupDate, returnDate, " +
+        System.out.println("9. Testing for addRental(pickupBranch, returnBranch, pickupDate, returnDate, " +
                 "modelNumber, color, year, driverLicense)");
 
         VinaRentSystem vrs = new VinaRentSystem();
+
+        System.out.println("Normal case: Add a new rental");
 
         // add customers
         vrs.addCustomer("Customer1", "license1", "email1", "phone1");
@@ -485,14 +501,16 @@ public class VinaRentSystemTest {
 
         // cannot add a rental with the non-existed branch
         try {
+            System.out.println("Cannot add a rental with the non-existed branch (branch4)");
             vrs.addRental("branch4","branch1", date2, date2,
                     "model2", "Color2.1",2003,"license1");
         } catch (Exception e) {
-            System.out.println(vrs.toString(vrs.getRentalList()));
+            System.out.println(vrs.toString(vrs.getBranchList()));
         }
 
         // cannot add a rental with returnDate before pickupDate
         try {
+            System.out.println("Cannot add a rental with returnDate before pickupDate");
             vrs.addRental("branch1","branch1", date1, date2,
                     "model2", "Color2.1",2003,"license1");
         } catch (Exception e) {
@@ -501,33 +519,39 @@ public class VinaRentSystemTest {
 
         // cannot add a rental with new customer, ask info of new customer
         try {
+            System.out.println("Cannot add a rental with new customer (license4), need to ask information of the new customer");
             vrs.addRental("branch1","branch1", date2, date2,
                     "model2", "Color2.1",2003,"license4");
         } catch (Exception e) {
-            System.out.println(vrs.toString(vrs.getRentalList()));
+            System.out.println(vrs.toString(vrs.getCustomerList()));
         }
 
         // cannot add a rental with a blacklisted customer
         try {
+            System.out.println("Cannot add a rental with a blacklisted customer (license3 is already in blacklist)");
             vrs.addRental("branch1","branch1", date2, date2,
                     "model2", "Color2.1",2003,"license3");
         } catch (Exception e) {
-            System.out.println(vrs.toString(vrs.getRentalList()));
+            System.out.println(vrs.toString(vrs.getCustomerList()));
         }
 
         // cannot add a rental with a non-existed model
         try {
+            System.out.println("Cannot add a rental with a non-existed model (model3)");
             vrs.addRental("branch1","branch1", date2, date2,
                     "model3", "Color2.1",2003,"license1");
         } catch (Exception e) {
-            System.out.println(vrs.toString(vrs.getRentalList()));
+            System.out.println(vrs.toString(vrs.getModelList()));
         }
 
         // cannot add a rental with a non-existed car
         try {
+            System.out.println("Cannot add a rental with a non-existed car (cannot find car that match the color, year and model)");
             vrs.addRental("branch1","branch1", date2, date2,
                     "model2", "Color2.1",2009,"license1");
         } catch (Exception e) {
+            System.out.println(vrs.toString(vrs.getCarList()));
+            System.out.println("The rental list in total");
             System.out.println(vrs.toString(vrs.getRentalList()));
         }
     }
@@ -535,7 +559,7 @@ public class VinaRentSystemTest {
     @Test
     // 2. Add a customer to blacklist test
     public void addBlacklistTest() throws Exception {
-        System.out.println("\nTesting for addBlacklist(driverLicense)");
+        System.out.println("\n10. Testing for addBlacklist(driverLicense)");
 
         VinaRentSystem vrs = new VinaRentSystem();
 
@@ -546,13 +570,16 @@ public class VinaRentSystemTest {
         System.out.println(vrs.toString(vrs.getCustomerList()));
 
         // Blacklisted customer 1
+        System.out.println("\nNormal case: Add customer 1 to blacklist");
         vrs.addBlacklist("license1");
+        System.out.println("Print out customer list after blacklisted customer1");
         System.out.println(vrs.toString(vrs.getCustomerList()));
 
         System.out.println("Print out error");
 
         // cannot blacklisted a customer with the non-existed driver license
         try {
+            System.out.println("Cannot blacklisted a customer with the non-existed driver license in the system");
             vrs.addBlacklist("license3");
         } catch (Exception e) {
             System.out.println(vrs.toString(vrs.getCustomerList()));
@@ -562,7 +589,7 @@ public class VinaRentSystemTest {
     @Test
     // 3. Update status of a car after being returned test
     public void carMaintenanceTest() throws Exception {
-        System.out.println("5. Testing for carMaintenance(regNum, status)");
+        System.out.println("11. Testing for carMaintenance(regNum, status)");
 
         VinaRentSystem vrs = new VinaRentSystem();
 
@@ -616,10 +643,12 @@ public class VinaRentSystemTest {
         System.out.println(vrs.toString(vrs.getCarList()) + "\n");
 
         // set status of the RETURNED car to SERVICE_NEEDED
+        System.out.println("Normal case: Maintain a RETURNED car (ASDF-1234)");
         vrs.carMaintenance("ASDF-1234", Status.SERVICE_NEEDED);
         System.out.println(vrs.toString(vrs.getCarList()) + "\n");
 
         // set status of the SERVICE_NEEDED car to READY
+        System.out.println("Normal case: Maintain a SERVICE_NEEDED car (ASDF-1234)");
         vrs.carMaintenance("ASDF-1234", Status.READY);
         System.out.println(vrs.toString(vrs.getCarList()) + "\n");
 
