@@ -160,6 +160,10 @@ public class VinaRentSystem {
 		return rentalList;
 	}
 	
+	public List<Customer> getBlacklist() {
+		return blacklist;
+	}
+	
 // --------------------------------- END OF GETTERS ------------------------------------ //
     
     
@@ -398,9 +402,6 @@ public class VinaRentSystem {
     	// check if driver License exists, retrieve customer
     	Customer customer = getCustomer(driverLicense);
 
-    	// remove customer from list
-		customerList.remove(customer);
-
     	// add customer to blacklist
 		blacklist.add(customer);
 	}
@@ -443,8 +444,8 @@ public class VinaRentSystem {
 			String endLine = result;
 			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 			
-			for (Branch branch : branchList)
-				result += branch.toString();
+			for (Object branch : list)
+				result += ((Branch)branch).toString();
 			
 			result += new String(new char[endLine.length()]).replace('\0', '-');	
 		}
@@ -456,8 +457,8 @@ public class VinaRentSystem {
 			String endLine = result;
 			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 			
-			for (Model model : modelList)
-				result += model.toString();
+			for (Object model : list)
+				result += ((Model) model).toString();
 			
 			result += new String(new char[endLine.length()]).replace('\0', '-');
 		}
@@ -469,8 +470,8 @@ public class VinaRentSystem {
 			String endLine = result;
 			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 			
-			for (Car car : carList)
-				result += car.toString();
+			for (Object car : list)
+				result += ((Car) car).toString();
 			
 			result += new String(new char[endLine.length()]).replace('\0', '-');
 		}
@@ -481,8 +482,8 @@ public class VinaRentSystem {
 			String endLine = result;
 			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 			
-			for (Customer customer : customerList)
-				result += customer.toString();
+			for (Object customer : list)
+				result += ((Customer) customer).toString();
 			
 			result += new String(new char[endLine.length()]).replace('\0', '-');
 		}
@@ -496,8 +497,8 @@ public class VinaRentSystem {
 			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 			
 			
-			for (Rental rental : rentalList)
-				result += rental.toString();
+			for (Object rental : list)
+				result += ((Rental) rental).toString();
 			
 			result += new String(new char[endLine.length()]).replace('\0', '-');
 		}

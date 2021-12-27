@@ -459,38 +459,37 @@ public class VinaRentSystemTest {
         System.out.println("Normal case: Add a new rental");
 
         // add customers
-        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
-        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
-        vrs.addCustomer("Customer3", "license3", "email3", "phone3");
+        vrs.addCustomer("Karen"	, "KA235436", "karen@something.com"	, "0945233234");
+        vrs.addCustomer("John"	, "JO547532", "john@something.com"	, "0945243552");
+        vrs.addCustomer("Kevin"	, "KE346236", "kevin@something.com"	, "091446675");
 
-        // add customer 3 to blacklist
-        vrs.addBlacklist("license3");
+        // add KA235436 to blacklist
+        vrs.addBlacklist("KA235436");
 
         // add branches
-        vrs.addBranch("branch1","BranchName1");
-        vrs.addBranch("branch2","BranchName2");
-        vrs.addBranch("branch3","BranchName3");
+        vrs.addBranch("D-1"	,	"Dist. 1 Branch");
+        vrs.addBranch("D-5"	,	"Dist. 5 Branch");
+        vrs.addBranch("D-7"	,	"Dist. 7 Branch");
 
         // make branches become neighbor
-        vrs.makeNeighbor("branch1", "branch2");
-        vrs.makeNeighbor("branch1", "branch3");
+        vrs.makeNeighbor("D-1", "D-5");
+        vrs.makeNeighbor("D-1", "D-7");
 
         // add models
-        vrs.addModel("model1","ModelName1",Transmission.automatic,
+        vrs.addModel("HONDA100","Honda Civic",Transmission.automatic,
                 0.5f, 4, Group.A);
-        vrs.addModel("model2","ModelName2",Transmission.automatic,
+        vrs.addModel("TOYOTA100","Toyota Camry",Transmission.automatic,
                 1.2f, 2, Group.B);
 
         // add cars
-        vrs.addCar("regNum1", "Color1", 2000,
-                "model1", "branch1");
-
-        vrs.addCar("regNum1.1", "Color1.1", 2002,
-                "model2", "branch1");
-        vrs.addCar("regNum2", "Color2", 2009,
-                "model2", "branch2");
-        vrs.addCar("regNum2.1", "Color2.1", 2003,
-                "model2", "branch3");
+        vrs.addCar("EQRR-6432", "red", 2000,
+                "HONDA100", "D-1");
+        vrs.addCar("VRNJ-3890", "green", 2002,
+                "HONDA100", "D-5");
+        vrs.addCar("ESZR-3048", "blue", 2009,
+                "TOYOTA100", "D-7");
+        vrs.addCar("GFOG-1223", "white", 2003,
+                "TOYOTA100", "D-1");
 
         // add string days
         String sDate1 = "31-12-2020 23:37:50";
@@ -504,71 +503,77 @@ public class VinaRentSystemTest {
         Date date2 = formatter.parse(sDate2);
 
         // add rentals
-        vrs.addRental("branch1","branch2", date2, date1,
-                "model1", "Color1",2000,"license1");
+        vrs.addRental("D-1","D-1", date2, date1,
+                "TOYOTA100", "blue",2009,"KE346236");
 
         // can add a rental with the same pickupBranch, returnBranch or the same
         // pickupDate and returnDate.
         // 1 customer can have many rentals.
         // System can find a car in neighbor branches of pickupBranch (the car here is in branch2).
-        vrs.addRental("branch1","branch1", date1, date1,
-                "model2", "Color2",2009,"license1");
+        vrs.addRental("D-5","D-5", date1, date1,
+                "HONDA100", "green",2002,"JO547532");
 
         System.out.println(vrs.toString(vrs.getRentalList()));
 
-        System.out.println("Print out error");
+        System.out.println("\nPrint out error");
 
         // cannot add a rental with the non-existed branch
         try {
-            System.out.println("Cannot add a rental with the non-existed branch (branch4)");
-            vrs.addRental("branch4","branch1", date2, date2,
-                    "model2", "Color2.1",2003,"license1");
+            System.out.println("Cannot add a rental with the non-existed branch (D-TD)");
+            vrs.addRental("D-TD","D-1", date2, date2,
+                    "HONDA100", "green",2002,"JO547532");
         } catch (Exception e) {
-            System.out.println(vrs.toString(vrs.getBranchList()));
+        	System.out.println("Rental list after the failed test");
+            System.out.println(vrs.toString(vrs.getRentalList()));
         }
 
         // cannot add a rental with returnDate before pickupDate
         try {
-            System.out.println("Cannot add a rental with returnDate before pickupDate");
-            vrs.addRental("branch1","branch1", date1, date2,
-                    "model2", "Color2.1",2003,"license1");
+            System.out.println("\nCannot add a rental with returnDate before pickupDate");
+            vrs.addRental("D-1","D-1", date1, date2,
+                    "TOYOTA100", "blue",2009,"KE346236");
         } catch (Exception e) {
+        	System.out.println("Rental list after the failed test");
             System.out.println(vrs.toString(vrs.getRentalList()));
         }
 
         // cannot add a rental with new customer, ask info of new customer
         try {
-            System.out.println("Cannot add a rental with new customer (license4), need to ask information of the new customer");
-            vrs.addRental("branch1","branch1", date2, date2,
-                    "model2", "Color2.1",2003,"license4");
+            System.out.println("\nCannot add a rental with new customer (GR345259), need to ask information of the new customer");
+            vrs.addRental("D-1","D-1", date2, date2,
+                    "TOYOTA100", "blue",2009,"GR345259");
         } catch (Exception e) {
+        	System.out.println("Rental list after the failed test");
             System.out.println(vrs.toString(vrs.getCustomerList()));
         }
 
         // cannot add a rental with a blacklisted customer
         try {
-            System.out.println("Cannot add a rental with a blacklisted customer (license3 is already in blacklist)");
-            vrs.addRental("branch1","branch1", date2, date2,
-                    "model2", "Color2.1",2003,"license3");
+            System.out.println("\nCannot add a rental with a blacklisted customer (KA235436)");
+            vrs.addRental("D-1","D-1", date2, date2,
+                    "TOYOTA100", "blue",2009,"KA235436");
         } catch (Exception e) {
+        	System.out.println("Rental list after the failed test");
             System.out.println(vrs.toString(vrs.getCustomerList()));
         }
 
         // cannot add a rental with a non-existed model
         try {
-            System.out.println("Cannot add a rental with a non-existed model (model3)");
-            vrs.addRental("branch1","branch1", date2, date2,
-                    "model3", "Color2.1",2003,"license1");
+            System.out.println("\nCannot add a rental with a non-existed model (VINFAST100)");
+            vrs.addRental("D-5","D-5", date2, date2,
+                    "VINFAST100", "red",2003,"KE346236");
         } catch (Exception e) {
+        	System.out.println("Rental list after the failed test");
             System.out.println(vrs.toString(vrs.getModelList()));
         }
 
         // cannot add a rental with a non-existed car
         try {
-            System.out.println("Cannot add a rental with a non-existed car (cannot find car that match the color, year and model)");
-            vrs.addRental("branch1","branch1", date2, date2,
-                    "model2", "Color2.1",2009,"license1");
+            System.out.println("\nCannot add a rental with a non-existed car (cannot find car that match the color, year and model)");
+            vrs.addRental("D-1","D-1", date2, date2,
+                    "HONDA100", "green",2020,"KE346236");
         } catch (Exception e) {
+        	System.out.println("The car list after the failed test");
             System.out.println(vrs.toString(vrs.getCarList()));
             System.out.println("The rental list in total");
             System.out.println(vrs.toString(vrs.getRentalList()));
@@ -578,28 +583,28 @@ public class VinaRentSystemTest {
     @Test
     // 2. Add a customer to blacklist test
     public void addBlacklistTest() throws Exception {
-        System.out.println("\n10. Testing for addBlacklist(driverLicense)");
+        System.out.println("10. Testing for addBlacklist(driverLicense)");
 
         VinaRentSystem vrs = new VinaRentSystem();
 
         // add normal customers
-        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
-        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+        vrs.addCustomer("Karen", "KA142423", "karen@something.com", "09322332");
+        vrs.addCustomer("Kevin", "KE238013", "kevin@something.com", "09124276");
 
         System.out.println(vrs.toString(vrs.getCustomerList()));
 
         // Blacklisted customer 1
         System.out.println("\nNormal case: Add customer 1 to blacklist");
-        vrs.addBlacklist("license1");
-        System.out.println("Print out customer list after blacklisted customer1");
-        System.out.println(vrs.toString(vrs.getCustomerList()));
+        vrs.addBlacklist("KA142423");
+        System.out.println("Print out blacklist");
+        System.out.println(vrs.toString(vrs.getBlacklist()));
 
-        System.out.println("Print out error");
+        System.out.println("\nPrint out error");
 
         // cannot blacklisted a customer with the non-existed driver license
         try {
-            System.out.println("Cannot blacklisted a customer with the non-existed driver license in the system");
-            vrs.addBlacklist("license3");
+            System.out.println("Cannot blacklisted a customer with the non-existed driver license in the system (JO231774)");
+            vrs.addBlacklist("JO231774");
         } catch (Exception e) {
             System.out.println(vrs.toString(vrs.getCustomerList()));
         }

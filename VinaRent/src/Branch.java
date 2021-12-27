@@ -99,7 +99,7 @@ public class Branch {
     	for (Group g : group) {
 			if (rentalGroup.get(g) != null) {
 				for (Rental r : rentalGroup.get(g)) {
-					result += String.format("%-20s | %-20s | %-20s",branchNumber, g, r.toString()); 
+					result += String.format("%-20s | %-20s | %-20s%n",branchNumber, g, r.getNumber()); 
 				}
 			}
     	}
