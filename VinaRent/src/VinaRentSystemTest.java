@@ -373,9 +373,8 @@ public class VinaRentSystemTest {
         for (Car car : vrs.listCar("D-1", Group.A)) {
             System.out.print(car.getRegNum());
         }
-        System.out.println("\n");
 
-        System.out.println("Print out error");
+        System.out.println("\nPrint out error");
 
         // non-existed branch number will cause error
         try {

@@ -334,7 +334,7 @@ public class VinaRentSystem {
 
 
 // ---------------------------- ADDITION ATOMIC USE CASES ---------------------------------- //
-    // BP1. Add rental
+    // 9. Add rental
 	public void addRental(String pickupBranch, String returnBranch, Date pickupDate, Date returnDate,
 			String modelNumber, String color, int year, String driverLicense) throws Exception {
 
@@ -397,20 +397,30 @@ public class VinaRentSystem {
 		pickupBr.getRentalGroup().put(group, newRental);
 	}
 
-	// Add a customer to blacklist
+	// 10. Add a customer to blacklist
 	public void addBlacklist(String driverLicense) throws Exception {
     	// check if driver License exists, retrieve customer
     	Customer customer = getCustomer(driverLicense);
+    	
+    	// check if driverLicense already in blacklist
+    	for (Customer c : blacklist) {
+    		if (c.getDriveLicense().equals(driverLicense)) {
+    			String msg = "Error: Customer was already in blacklist!";
+    			System.out.println(msg);
+    			throw new Exception(msg);
+    		}
+    	}
 
     	// add customer to blacklist
 		blacklist.add(customer);
 	}
 
+	// 11. Maintain car
 	public void carMaintenance(String regNum, Status status) throws Exception {
 		// check if the car exists
 		Car car = getCar(regNum);
 
-		// check if the car's status is neither RETURNED or SERVICE_NEEDED
+		// check if the car's status is either RETURNED or SERVICE_NEEDED
 		if ((car.getStatus() != Status.RETURNED) && (car.getStatus() != Status.SERVICE_NEEDED)) {
 			String msg = "Error: The car is neither RETURNED or SERVICE_NEEDED";
 			System.out.println(msg);
