@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -435,8 +434,8 @@ public class VinaRentSystem {
 		String result = null;
 		
 		if (list.get(0) instanceof Branch) {
-			result = String.format("%-20s | %-30s | %-20s | %-20s\n",
-					"Branch Number", "BranchName", "Neighbor Branches", "Cars list");
+			result = String.format("%-20s | %-30s\n",
+					"Branch Number", "BranchName");
 			String endLine = result;
 			result += new String(new char[result.length()]).replace('\0', '-') + "\n";
 			

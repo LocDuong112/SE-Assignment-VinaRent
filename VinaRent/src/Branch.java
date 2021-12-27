@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Branch {
@@ -58,40 +57,11 @@ public class Branch {
     public void setNeighborList(List<Branch> neighborList) {
         this.neighborList = neighborList;
     }
-
-    public String toString(String listName) {
-        String result = "";
-        result = String.format("%-20s | %-20s | ", branchNumber, name);
-
-        switch (listName) {
-            case "branch-neighbor":
-                for (Branch branch : neighborList) {
-                    result += String.format("%s, ", branch.getBranchNumber());
-                }
-                break;
-
-            case "branch-car":
-                for (Car car : carList) {
-                    result += String.format("%s, ", car.getRegNum());
-                }
-                break;
-
-            case "branch-rental":
-                for (Group group : rentalGroup.keySet()) {
-                    result += String.format("(Group %s): ", group.toString());
-                    for (Rental rental : rentalGroup.get(group)) {
-                        result += String.format("%s, ", rental.getNumber());
-                    }
-                }
-                break;
-        }
-        return result;
-    }
     
     @Override
     public String toString() {
     	String result = "";
-        result = String.format("%-20s | %-30s | %n", branchNumber, name);
+        result = String.format("%-20s | %-30s %n", branchNumber, name);
     	return result;
     }
 }
