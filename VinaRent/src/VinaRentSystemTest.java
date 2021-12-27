@@ -1,6 +1,7 @@
 import java.awt.desktop.ScreenSleepEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -79,7 +80,11 @@ public class VinaRentSystemTest {
         // 1 branch can have many neighbors
         vrs.makeNeighbor("D-1", "D-TD");
 
-        System.out.println(vrs.toString(vrs.getBranchList()) + "\n");
+        Iterator<Branch> itr = vrs.getBranchList().iterator();
+        while (itr.hasNext()) {
+			Branch branch = (Branch) itr.next();
+			System.out.println(branch.toString(branch.getNeighborList()));
+		}
 
         System.out.println("Print out error");
 
@@ -88,7 +93,11 @@ public class VinaRentSystemTest {
         	System.out.println("Try to make neighbor with non-existed branch (D-7)");
             vrs.makeNeighbor("D-7"	,	"Dist. 7 Branch");
         } catch (Exception e) {
-            System.out.println(vrs.toString(vrs.getBranchList()) + "\n");
+        	itr = vrs.getBranchList().iterator();
+        	while (itr.hasNext()) {
+				Branch branch = (Branch) itr.next();
+				System.out.println(branch.toString(branch.getNeighborList()));
+			}
         }
 
         // cannot add 2 neighbored branches
@@ -96,7 +105,11 @@ public class VinaRentSystemTest {
         	System.out.println("Try to make neighbor with already made neighbor branches (D-1 and D-TD)");
             vrs.makeNeighbor("D-1", "D-TD");
         } catch (Exception e) {
-            System.out.println(vrs.toString(vrs.getBranchList()));
+        	itr = vrs.getBranchList().iterator();
+        	while (itr.hasNext()) {
+				Branch branch = (Branch) itr.next();
+				System.out.println(branch.toString(branch.getNeighborList()));
+			}
         }
     }
 
@@ -108,35 +121,35 @@ public class VinaRentSystemTest {
         VinaRentSystem vrs = new VinaRentSystem();
 
         // add customers
-        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
-        vrs.addCustomer("Customer2", "license2", "email2", "phone2");
+        vrs.addCustomer("Karen", "KA23984", "karen@something.com", "0923543426");
+        vrs.addCustomer("Kevin", "KE13095", "kevin@something.com", "0912355468");
 
         // add branches
-        vrs.addBranch("branch1","BranchName1");
-        vrs.addBranch("branch2","BranchName2");
+        vrs.addBranch("D-1"		,	"Dist. 1 Branch");
+        vrs.addBranch("D-5"		,	"Dist. 5 Branch");
 
         // make branches become neighbor
-        vrs.makeNeighbor("branch1", "branch2");
+        vrs.makeNeighbor("D-1", "D-5");
 
         // add models
-        vrs.addModel("model1","ModelName1",Transmission.automatic,
+        vrs.addModel("HONDA100","Honda Civic",Transmission.automatic,
                 0.5f, 4, Group.A);
-        vrs.addModel("model2","ModelName2",Transmission.automatic,
+        vrs.addModel("TOYOTA100","Toyota Camry",Transmission.automatic,
                 1.2f, 2, Group.B);
 
         // add cars
-        vrs.addCar("regNum1", "Color1", 2000,
-                "model1", "branch1");
-        vrs.addCar("regNum1.1", "Color1.1", 2002,
-                "model2", "branch1");
-        vrs.addCar("regNum2", "Color2", 2009,
-                "model2", "branch2");
-        vrs.addCar("regNum2.1", "Color2.1", 2003,
-                "model2", "branch2");
+        vrs.addCar("IUEG-3646", "red", 2000,
+                "HONDA100", "D-1");
+        vrs.addCar("EOIV-0877", "green", 2002,
+                "TOYOTA100", "D-1");
+        vrs.addCar("ONIG-9908", "blue", 2009,
+                "HONDA100", "D-5");
+        vrs.addCar("UTVY-7896", "white", 2003,
+                "TOYOTA100", "D-5");
 
         // add string days
-        String sDate1 = "31-12-2020 23:37:50";
-        String sDate2 = "12-11-1998 11:49:12";
+        String sDate1 = "31-12-2021 23:37:50";
+        String sDate2 = "10-1-2022 11:49:12";
 
         // add date formatters
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -146,14 +159,22 @@ public class VinaRentSystemTest {
         Date date2 = formatter.parse(sDate2);
 
         // add rentals
-        vrs.addRental("branch1","branch2", date2, date1,
-                "model1", "Color1",2000,"license1");
-        vrs.addRental("branch1","branch1", date1, date1,
-                "model2", "Color2",2009,"license2");
-        vrs.addRental("branch2","branch1", date2, date2,
-                "model2", "Color1.1",2002,"license2");
+        vrs.getRentalList().clear();
+        vrs.addRental("D-1","D-1", date1, date2,
+                "HONDA100", "red",2000,"KA23984");
+        vrs.addRental("D-5","D-5", date1, date2,
+                "TOYOTA100", "white",2003,"KA23984");
+        vrs.addRental("D-1","D-1", date1, date2,
+                "HONDA100", "blue",2009,"KE13095");
 
-        System.out.println(vrs.toString(vrs.getRentalList()));
+//        System.out.println(vrs.toString(vrs.getRentalList()));
+        for (Branch b : vrs.getBranchList())
+        	System.out.println(b.toString(b.getRentalList()));
+        Iterator<Branch> itr = vrs.getBranchList().iterator();
+        while (itr.hasNext()) {
+			Branch branch = (Branch) itr.next();
+			System.out.println(branch.toString(branch.getRentalGroup()));
+		}
 
         System.out.println("No error cases can be created!");
     }
@@ -371,22 +392,22 @@ public class VinaRentSystemTest {
         System.out.println("Normal case: Record the returning of a rental");
 
         // add customers
-        vrs.addCustomer("Customer1", "license1", "email1", "phone1");
+        vrs.addCustomer("Karen", "KA26835", "karen@something.com", "092354254");
 
         // add branches
-        vrs.addBranch("branch1","BranchName1");
-        vrs.addBranch("branch2","BranchName2");
+        vrs.addBranch("D-1"		,	"Dist. 1 Branch");
+        vrs.addBranch("D-5"		,	"Dist. 5 Branch");
 
         // make branches become neighbor
-        vrs.makeNeighbor("branch1", "branch2");
+        vrs.makeNeighbor("D-1", "D-5");
 
         // add models
-        vrs.addModel("model1","ModelName1",Transmission.automatic,
+        vrs.addModel("HONDA100","Honda Civic",Transmission.automatic,
                 0.5f, 4, Group.A);
 
         // add cars
-        vrs.addCar("regNum1", "Color1", 2000,
-                "model1", "branch1");
+        vrs.addCar("UVYU-2489", "blue", 2000,
+                "HONDA100", "D-1");
 
         // add string days
         String sDate1 = "31-12-2020 23:37:50";
@@ -404,22 +425,20 @@ public class VinaRentSystemTest {
         Date date4 = formatter.parse(sDate4);
 
         // add rentals
-        vrs.addRental("branch1","branch2", date2, date1,
-                "model1", "Color1",2000,"license1");
-        String rentalNumber1 = "license1-Thu Nov 12 11:49:12 ICT 1998";
-        System.out.println(vrs.toString(vrs.getRentalList()));
+        vrs.addRental("D-1","D-1", date2, date1,
+                "HONDA100", "blue",2000,"KA26835");
+        String rentalNumber1 = "KA26835-Thu Nov 12 11:49:12 ICT 1998";
+        System.out.println(vrs.toString(vrs.getRentalList()) + "\n");
 
-        System.out.println("\n");
+        vrs.recordReturn(rentalNumber1, date3, "D-5");
+        System.out.println(vrs.toString(vrs.getRentalList()) + "\n");
 
-        vrs.recordReturn(rentalNumber1, date3, "branch2");
-        System.out.println(vrs.toString(vrs.getRentalList()));
-
-        System.out.println("\nPrint out error");
+        System.out.println("Print out error");
 
         // cannot record return for a returned rental
         try {
             System.out.println("Trying to record the returning of a returned rental (rental: \"license1-Thu Nov 12 11:49:12 ICT 1998\")");
-            vrs.recordReturn(rentalNumber1, date3, "branch2");
+            vrs.recordReturn(rentalNumber1, date3, "D-5");
         } catch (Exception e) {
             System.out.println(vrs.toString(vrs.getRentalList()));
         }

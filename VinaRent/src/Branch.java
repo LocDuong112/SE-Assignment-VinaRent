@@ -61,7 +61,48 @@ public class Branch {
     @Override
     public String toString() {
     	String result = "";
-        result = String.format("%-20s | %-30s %n", branchNumber, name);
+        result = String.format("%-20s | %-30s%n", branchNumber, name);
+    	return result;
+    }
+    
+    public String toString(List<?> list) {
+    	String result = "";
+    	if (list.get(0) instanceof Branch) {
+    		result += String.format("List of neighbors of %s (%s)%n", name, branchNumber);
+			result += new String(new char[result.length()]).replace('\0', '-') + String.format("%n", null);
+    		for (Object b : list) {
+    			result += String.format("%s", ((Branch)b).toString());
+    		}
+    	}
+    	else if (list.get(0) instanceof Car) {
+    		result += String.format("List of cars of %s (%s)%n", name, branchNumber);
+			result += new String(new char[result.length()]).replace('\0', '-') + String.format("%n", null);
+    		for (Object b : list) {
+    			result += String.format("%s", ((Car)b).toString());
+    		}
+    	}
+    	else if (list.get(0) instanceof Rental) {
+    		result += String.format("List of rentals of %s (%s)%n", name, branchNumber);
+			result += new String(new char[result.length()]).replace('\0', '-') + String.format("%n", null);
+    		for (Object b : list) {
+    			result += String.format("%s", ((Rental)b).toString());
+    		}
+    	}
+    	return result;
+    }
+    
+    public String toString(Multimap<Group, Rental> rentalGroup) {
+    	String result = "";
+    	Group group[] = Group.values();
+    	result += String.format("%n%-20s | %-20s | %-20s%n", "Branch", "Group", "Rentals");
+    	result += new String(new char[result.length()]).replace('\0', '-') + String.format("%n", null);
+    	for (Group g : group) {
+			if (rentalGroup.get(g) != null) {
+				for (Rental r : rentalGroup.get(g)) {
+					result += String.format("%-20s | %-20s | %-20s",branchNumber, g, r.toString()); 
+				}
+			}
+    	}
     	return result;
     }
 }
